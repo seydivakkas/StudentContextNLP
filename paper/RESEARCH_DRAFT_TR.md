@@ -44,11 +44,13 @@ Veri: SciEntsBank, beş özgün sınıftan dört türetilmiş sınıfa dönüş�
 
 Sınıflandırılan etiket öğrencinin kalıcı zihinsel yanlış kavramasının kanıtı değildir. Other kategorisi iki heterojen etiketi birleştirir. Referans cevap ana model girdisinde yoktur. Fen/İngilizce veri sonuçları Türkçe veya diğer derslere otomatik genellenmez. Türkçe etiketli veriyle eğitim v0.2 ayrı çalışmasıdır.
 
-## Aday hedefler (başvuru durumları ayrı doğrulanmalı)
+## Yarışma hedefi — TEKNOFEST 2242 Eğitim
 
-- TÜBİTAK 2209-A (2026): araştırma önerisi; 11 Kasım 2026 17.30'a kadar başvuru, lisans statüsü ve akademik danışman koşullarına bağlı. Resmî başvuru çevrimiçi TYBS formuyla yapılır.
-- TÜBİTAK 2242: sonraki yarışma çağrısı takip edilecek; 2026 değerlendirmesi tamamlandı.
-- ACL/SIGEDU BEA: araştırma raporu/çalıştay hedefi; 2026 çağrısı kapandı, gelecek çağrının takvimi henüz sabit değil.
+- **Ana yarışma:** 2242 Üniversite Öğrencileri Araştırma Proje Yarışmaları, **Eğitim** kategorisi. Bu, 2209-A gibi araştırma destek başvurusu değildir.
+- **Durum:** 2026 yarışması tamamlandı. Yeni dönem (muhtemel 2027) takvim ve uygunluk koşulları açıklanana kadar hazırlanacak materyaller yalnız taslaktır.
+- **Başvuru araştırma raporu:** `paper/COMPETITION_2242_EDUCATION_TR.md`. Resmî 2026 rehberinde özet 150–300 kelime, PDF raporu 2–20 sayfa, yazılım kodu ek olarak öngörülmüştür. Yeni yıl rehberiyle teyit gereklidir.
+- **Ön koşullar:** Gerçek SciEntsBank P0 denetimi, B0–B3 sonuçları ve doğrulanmış model karşılaştırması olmadan nihai yarışma raporu hazırlanmış sayılmaz.
+- **Gelecek:** Türkçe veri ile v0.2 ayrı araştırma uzantısı; mevcut sonuçları varmış gibi göstermeyeceğiz.
 
 ## Kaynaklar
 
