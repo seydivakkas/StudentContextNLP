@@ -19,6 +19,17 @@ Soru metnini öğrenci açıklamasına eklemek, eğitim sırasında hiç görül
 - **Değerlendirme:** train içi question-grouped validation; bağımsız birincil Test-UQ; ikincil Test-UA/Test-UD; Macro-F1, sınıf F1, confusion matrix, soru kümeli eşleştirilmiş bootstrap, CPU maliyeti.
 - **Etik/teknik:** API key, LLM API, uzaktan inference, büyük LLM eğitimi, RAG veya ajan yoktur. Gizli referans yanıtı ana modelin girdisi değildir. Sentetik test skorları bilimsel sonuç olarak gösterilmez.
 
+## 2026 jüri değerlendirme ölçütlerine kanıt eşlemesi
+
+| Ölçüt | Bu araştırmada jüriye gösterilecek kanıt | Mevcut durum |
+|---|---|---|
+| Özgünlük/Yenilikçilik | Bağlam ablasyonu, yalnız soru kontrolü, literatürle kontrollü karşılaştırma | Gerçek deneyler bekleniyor |
+| Yöntem ve Süreç | Soru gruplu validation, P0 denetimi, yeniden üretim kaydı | Sentetik CI başarılı; P0 bekleniyor |
+| Uygulanabilirlik/Kullanılabilirlik | CPU'da gerçek model, süre ölçümü ve çevrimdışı inference | Gerçek benchmark bekleniyor |
+| Katma Değer/Yaygın Etki | İnsan denetimli eğitim değerlendirmesine potansiyel katkı; Türkçe v0.2 | Kullanıcı/eğitim etkisi henüz ölçülmedi |
+
+Bu dört ölçüt **2026 çağrı metninden** alınmıştır; ölçütlerin 2027'de aynı kalacağı varsayılmayacaktır.
+
 ## 2026 yarışma rehberindeki rapor bölümleri
 
 1. Giriş: amaç, eğitim değeri, literatür ve özgünlük sınırları.
