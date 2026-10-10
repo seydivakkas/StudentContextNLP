@@ -28,7 +28,7 @@
 
 ## Research handling decision for first baseline
 
-**Conditional approval to proceed to a descriptive original-data B0–B3 baseline** after local manifest hashes are verified and the researcher's `reports/P0_DECISION.md` is generated:
+**Conditional approval was enacted on the researcher's Windows computer** after verifying local SHA-256 hashes and generating `reports/P0_DECISION.md`; the first descriptive original-data B0–B3 baseline was run:
 
 1. Do not modify original Parquet files or resolve contradictory labels by guesswork.
 2. Include all 4,969 original training rows in the primary fixed-dataset benchmark; later run a **separately identified sensitivity analysis** excluding or grouping contradictory records and compare against the frozen primary result.
@@ -39,9 +39,10 @@
 
 ## Still to check locally
 
-- [ ] Recompute hashes and verify all 4 Parquet files against `data/raw/file_manifest.json` and check pinned source revision
-- [ ] Write `reports/P0_DECISION.md` capturing warning acceptance and SHA256 provenance
-- [ ] Run B0–B3 without modifying official tests, preserve `selection_before_test.json` and `baseline_results.json`
-- [ ] Record real Test-UQ Macro-F1 and paired cluster bootstrap in research report (not yet measured)
+- [x] Researcher locally verified SHA-256 for all four Parquet files against the pinned source manifest.
+- [x] Researcher wrote `reports/P0_DECISION.md` with an explicit conditional warning acceptance.
+- [x] Researcher ran B0–B3 original-data baseline on Windows; result files are in locally ignored `results/lexical/`.
+- [x] Researcher provided actual Test-UQ aggregate metrics (see [research report](RESEARCH_DRAFT_TR.md)).
+- [ ] Independent run on the same source bytes and conflict/duplicate sensitivity analysis (future confirmation).
 
-**No model efficacy or translation quality can be inferred from this P0 audit alone.**
+**No translation quality can be inferred from this P0 audit.** For model performance, see the separately documented real Test-UQ experiment and its limitations.
