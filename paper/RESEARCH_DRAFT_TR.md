@@ -1,62 +1,74 @@
-# StudentContextNLP v0.1 — Akademik çalışma durumu
+# StudentContextNLP v0.1/v0.2 — Gerçek Araştırma Kaydı
 
-**Türkçe başlık:** Öğrenci Açıklamalarındaki Anlamsal ve Bağlamsal Tutarsızlıkların Sınıflandırılmasında Soru Bağlamının Etkisi.
+**Sabit proje başlığı:** Öğrenci Açıklamalarının Soru Bağlamına Duyarlı Anlamsal Değerlendirilmesi: Türkçe Veri Uyarlaması ve Diller Arası Karşılaştırmalı Analiz.
 
-**İngilizce başlık:** The Effect of Question Context on Classifying Semantic Inconsistencies in Student Explanations.
+**Yarışma hedefi:** TEKNOFEST 2242 Eğitim kategorisi, gelecek çağrı değerlendirmesine hazırlık. Bu belge nihai yarışma raporu değildir.
 
-> **SONUÇ DURUMU: BEKLENİYOR.** Kaynak kodu ve sentetik GitHub CI testi vardır. Gerçek SciEntsBank veri denetimi, model eğitimi ve bilimsel skorlar henüz gerçekleştirilmemiştir.
+## Araştırma soruları
 
-## Araştırma sorusu
+1. Soru metni eklenmesi, görülmemiş soru kümeleri üzerinde dört sınıflı Macro-F1'i değiştiriyor mu?
+2. v0.2'de İngilizceden Türkçeye aktarım, öğrenci açıklamasının anlamını ve özgün hatalı yanıt/etiket niteliğini hangi sıklıkla koruyor? İki dilde soru bağlamı ablasyonu nasıl farklılaşıyor?
 
-Öğrenci açıklamasına soru bağlamı eklemek, yeni sorulara genellemede dört sınıflı Macro-F1 performansını değiştirir mi?
+**Birincil ön kayıtlı deney:** Δ = Macro-F1(B2, Test-UQ) − Macro-F1(B1, Test-UQ). H0: Δ=0; H1: Δ≠0. Bir eğitim müdahalesinin nedensel etkisi değildir.
 
-- Birincil karşılaştırma: Δ_Q = Macro-F1(B2, Test-UQ) − Macro-F1(B1, Test-UQ).
-- İkincil karşılaştırma: S2−S1 (yerel, dondurulmuş MiniLM).
-- H0: Δ_Q=0; H1: Δ_Q≠0. Model girdisi ablasyonudur; öğrencide öğrenme etkisi değildir.
+## Modeller
 
-## Deney matrisi
-
-| ID | Girdi | Model |
+| ID | Girdi | Temsil / öğrenici |
 |---|---|---|
-| B0 | Özellik yok | Majority class |
-| B1 | Yalnız açıklama | TF-IDF + Logistic Regression |
-| B2 | Açıklama + soru | TF-IDF + Logistic Regression |
-| B3 | Yalnız soru | TF-IDF + Logistic Regression |
-| S1 | Yalnız açıklama | Yerel MiniLM embedding + Logistic Regression |
-| S2 | Açıklama + soru | Yerel MiniLM embedding + Logistic Regression |
+| B0 | Metin özelliği yok | Majority class |
+| B1 | Yalnız öğrenci açıklaması | Kelime + karakter TF-IDF; Logistic Regression |
+| B2 | Açıklama ve soru birlikte | Aynı TF-IDF tasarımı; Logistic Regression |
+| B3 | Yalnız soru | Aynı TF-IDF tasarımı; Logistic Regression |
+| S1 | Yalnız açıklama | Yerel dondurulmuş MiniLM + Logistic Regression |
+| S2 | Açıklama + soru | Yerel dondurulmuş MiniLM + Logistic Regression |
 
-Veri: SciEntsBank, beş özgün sınıftan dört türetilmiş sınıfa dönüşüm. Train içinde soru gruplarıyla validation; birincil bağımsız test: Test-UQ. İkincil: Test-UA, Test-UD. Soru kümelerine dayalı eşleştirilmiş bootstrap güven aralığı, sınıf bazlı F1 ve hata analizi.
+Sabit veri: SciEntsBank (İngilizce), 4 türetilmiş sınıf: Correct, Incomplete, Contradictory, Other. Yalnız eğitim verisinde soru gruplu validation ve C∈{0.1,1,10}; birincil Test-UQ; ikincil Test-UA ve Test-UD. Referans açıklama hiçbir ana sınıflandırıcının girdisi değildir.
 
-## Gerçek sonuçlar için kilitli alanlar
+## P0 — Gerçek veri incelemesi
 
-| Sonuç | Değer |
-|---|---|
-| P0 veri denetimi | BEKLENİYOR |
-| Test-UQ B1 Macro-F1 | BEKLENİYOR |
-| Test-UQ B2 Macro-F1 | BEKLENİYOR |
-| Δ_Q ve %95 GA | BEKLENİYOR |
-| S1/S2 sonuçları | BEKLENİYOR |
-| Etiket, tekrar ve sızıntı uyarıları | BEKLENİYOR |
+**Kaynak:** Kullanıcının 10 Ekim 2026 tarihli Windows çıktıları; ham veri, SHA-256 değerleri, eğitim artefaktları yalnız yerel makinede tutuluyor. GitHub bu veri dosyalarını kendi başına yeniden çalıştırmadı.
 
-**Gerçek olmayan demo skorları bilimsel sonuç sayılmaz.** Kaynak dosyalar ve model ağırlıkları repoya eklenmeyecek. API key / LLM API / bulut inference / büyük model eğitimi olmayacak.
+- Dört Parquet dosyasının SHA-256 değerleri indirilen dosya manifestiyle kullanıcının yerel Python kontrolünde uyuştu.
+- 10.804 satır, tüm bölümlerde 195 benzersiz normalize soru, resmi dağılımlarla eşleşen beşli sınıf sayıları.
+- **P0 status: PASS_WITH_WARNINGS, fatal=0.** Train: altısı da dört sınıfa aktarıldığında süren 6 çelişkili üçlü / 15 satır. Test-UD: 1 çelişkili üçlü / 6 satır. Test-UA: train ile 24 ortak normalize üçlü.
+- **Test-UQ train ortak soru=0, ortak üçlü=0;** 15 soru kümesi ve 733 öğrenci açıklaması. Test-UQ içinde 30 ilave tekrar kaydı.
+- Araştırmacı yerelde `reports/P0_DECISION.md` yazıp uyarıları kaydetti; ana deneyde hiçbir etiket değiştirilmedi. Daha sonra etiket çatışması / yinelenen satır duyarlılık analizi planlanmıştır.
+- Ayrıntılar: [P0 gerçek veri denetimi](P0_REAL_DATA_AUDIT_2026-10-10.md).
 
-## Çalışmanın sınırları
+## P1 — Gerçek SciEntsBank Test-UQ sonuçları (10 Ekim 2026)
 
-Sınıflandırılan etiket öğrencinin kalıcı zihinsel yanlış kavramasının kanıtı değildir. Other kategorisi iki heterojen etiketi birleştirir. Referans cevap ana model girdisinde yoktur. Fen/İngilizce veri sonuçları Türkçe veya diğer derslere otomatik genellenmez. Türkçe etiketli veriyle eğitim v0.2 ayrı çalışmasıdır.
+**Kanıt türü:** Kullanıcı, gerçek yerel `train_lexical.py` çıktısını aktardı; `results/lexical/baseline_results.json`, `selection_before_test.json` ve tahmin dosyaları GitHub'a yüklenmedi. Dolayısıyla sayılar *kullanıcının yerel deney raporudur*, GitHub CI'nin doğruladığı bilimsel skorlar değildir.
 
-## Yarışma hedefi — TEKNOFEST 2242 Eğitim
+| Model | Test-UQ Macro-F1 |
+|---|---:|
+| B0 — Çoğunluk sınıfı | 0.1455512572533849 |
+| B1 — Açıklama | 0.2950231314934188 |
+| B2 — Açıklama+soru | 0.2405991832538969 |
+| B3 — Soru | 0.17017237841165606 |
 
-- **Ana yarışma:** 2242 Üniversite Öğrencileri Araştırma Proje Yarışmaları, **Eğitim** kategorisi. Bu, 2209-A gibi araştırma destek başvurusu değildir.
-- **Durum:** 2026 yarışması tamamlandı. Yeni dönem (muhtemel 2027) takvim ve uygunluk koşulları açıklanana kadar hazırlanacak materyaller yalnız taslaktır.
-- **Başvuru araştırma raporu:** `paper/COMPETITION_2242_EDUCATION_TR.md`. Resmî 2026 rehberinde özet 150–300 kelime, PDF raporu 2–20 sayfa, yazılım kodu ek olarak öngörülmüştür. Yeni yıl rehberiyle teyit gereklidir.
-- **Ön koşullar:** Gerçek SciEntsBank P0 denetimi, B0–B3 sonuçları ve doğrulanmış model karşılaştırması olmadan nihai yarışma raporu hazırlanmış sayılmaz.
-- **Gelecek:** Türkçe veri ile v0.2 ayrı araştırma uzantısı; mevcut sonuçları varmış gibi göstermeyeceğiz.
+- **Ön kayıtlı Δ(B2−B1): −0.0544239482395219** (−5,44 Macro-F1 yüzde puanı).
+- **%95 tanımlayıcı, eşleştirilmiş soru-kümesi bootstrap yüzdelik aralığı:** [−0.10254558393043693, −0.006910099256588127]; **15 soru kümesi**, **1.000** bootstrap yinelemesi.
+- **Yorum:** Bu *özel TF-IDF + LR temsilinde* soru metninin eklenmesi, görülmemiş sorularda performansı düşürdü. Bu, soru bağlamının genel olarak faydasız olduğunu veya başka modellerde de aynı sonucun alınacağını kanıtlamaz. B3 düşüklüğü, sorunun tek başına yeterli bir kestirim girdisi olmadığını bu deneyde destekler.
+- **Sınırlılıklar:** Sadece 15 bağımsız soru; 30 Test-UQ tekrar kaydı; train etiket çelişkileri; Other heterojen sınıfı; sınıf dengesizlikleri. Tek bootstrap yöntemi ve bu küçük soru sayısı, güçlü genelleme/istatistiksel kesinlik iddiasına yetmez.
+- **Araştırmanın devamı:** Per-class F1/karışıklık matrisi, tekrar/çelişki duyarlılık analizi, validasyon skorları, CPU maliyeti. Bu analizlerde resmi Test-UQ'ya göre yeniden hiperparametre seçimi **yapılmayacak**.
+
+## P2 — Türkçe veri uyarlaması: BEKLENİYOR
+
+Tam 10.804 satır için yerel Argos EN→TR aktarımı hedefleniyor. Çeviriler `UNVERIFIED_MACHINE_TRANSLATION`, aktarılan etiketler `UNVERIFIED_TRANSFER` olarak kalacak. İnsan doğrulaması olmadan bunlar Türkiye'deki öğrenci cevapları veya Türkçe altın standart olarak tanıtılamaz.
+
+İnsan değerlendirmesi, yalnız metin çevrimi değil, bilimsel yanlışlığın/olumsuzlamanın ve etiket anlamının korunmasını sınayacak. Türkçe dört-sınıf deneyleri, çeviri kalite kapısından sonra *ayrı raporlanacak*.
+
+## Araştırma etiği ve yeniden üretilebilirlik
+
+- Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
+- Ham metinler, kaynak Parquet dosyaları, çeviri cache'leri, model ağırlıkları ve öğrenci satırı düzeyindeki tahminler GitHub'a konmaz; GitHub'da yalnız kaynak kod, toplu istatistik ve araştırma kayıtları.
+- SciEntsBank kaynak verisi beş etiketlidir; dört-sınıf yeniden eşleştirmesi özgün etiketi yok etmez. Veri lisansı ve çeviri model lisansı ayrı değerlendirilmelidir.
 
 ## Kaynaklar
 
-1. Dzikovska vd., 2013, SemEval Task 7 — https://aclanthology.org/S13-2045/
-2. Reimers & Gurevych, 2019, Sentence-BERT — https://aclanthology.org/D19-1410/
-3. SciEntsBank veri kartı — https://huggingface.co/datasets/nkazi/SciEntsBank
-4. TÜBİTAK 2209-A 2026 — https://tubitak.gov.tr/tr/burslar/lisans-onlisans/destek-programlari/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi
+1. Dzikovska vd. (2013), SemEval Task 7 — https://aclanthology.org/S13-2045/
+2. Reimers & Gurevych (2019), Sentence-BERT — https://aclanthology.org/D19-1410/
+3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
+4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki tek teknik görev:** Windows üzerinde depo/test ortamını çalıştırmak, ardından P0 gerçek veri indirmesi ve audit çıktısını incelemek.
+**Sonraki teknik görev:** Yerel Argos EN→TR modelinin gerçek kurulumu ve iki satır/bölüm şeklinde yazılım smoke kontrolü; sonrasında tam 10.804 aday çeviri.
