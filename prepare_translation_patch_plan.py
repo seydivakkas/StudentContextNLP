@@ -80,20 +80,24 @@ def prepare(priority_dir: Path, out: Path, limit: int = 100, min_rows: int = 2):
         -int(r["affected_distinct_rows"]),
         -int(r["rule_occurrences"]), r["cluster_id"],
     ))
-    chosen = candidates[:limit]
     seen_pairs = set()
     forms = []
-    for r in chosen:
-        # A single field+English+Turkish pair must never have conflicting edits.
+    duplicate_concept_pairs_skipped = 0
+    for r in candidates:
+        # Multiple concepts may flag the same exact source-target text.
+        # Choose the highest-ranked cluster; never allow competing replacements.
         key = (r["field"], r["source_en"], r["target_tr"])
         if key in seen_pairs:
-            raise ValueError("Multiple root-cause clusters share the same exact source/target pair")
+            duplicate_concept_pairs_skipped += 1
+            continue
         seen_pairs.add(key)
         forms.append({
             **{x: r[x] for x in FORM_FIELDS if x in r},
             "proposed_tr": "", "decision": "PENDING",
             "curation_origin": "", "evidence_note": "",
         })
+        if len(forms) == limit:
+            break
     stage.mkdir(parents=True)
     try:
         candidate_file = stage / "patch_candidates.csv"
@@ -109,6 +113,7 @@ def prepare(priority_dir: Path, out: Path, limit: int = 100, min_rows: int = 2):
             "candidate_file_sha256": file_sha(candidate_file),
             "candidate_count": len(forms),
             "eligible_repeated_p1_p2_clusters": len(candidates),
+            "duplicate_concept_pairs_skipped": duplicate_concept_pairs_skipped,
             "limit": limit, "min_rows": min_rows,
             "candidate_affected_rows_sum_not_distinct": sum(
                 int(x["affected_distinct_rows"]) for x in forms),
