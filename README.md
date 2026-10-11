@@ -1,4 +1,4 @@
-# StudentContextNLP (v0.1)
+# StudentContextNLP — English v0.1 baseline + exploratory TR v0.2.1
 
 **Research:** The Effect of Question Context on Classifying Semantic Inconsistencies in Student Explanations.
 
@@ -8,7 +8,9 @@
 
 This research-code repository compares four-class SciEntsBank student response assessment under **explanation-only vs explanation+question** inputs. It runs locally on CPU with lexical TF-IDF baselines and optional frozen local MiniLM sentence representations followed by Logistic Regression. No API keys, hosted LLM inference, agent, database, or LLM training.
 
-**Results policy:** There are no validated SciEntsBank results in this repository yet. All locally generated smoke fixtures and scores are **synthetic software tests**, never research evidence. Real results must be produced separately after the source is published and the official data audit has passed.
+**Research status (11 October 2026):** Real SciEntsBank English and exploratory machine-translated Turkish B0–B3 results have been obtained **locally by the researcher** and summarized in GitHub. Latest Windows regression suite: **76 passed**; original English P1 metrics reproduced at 1e-8; all 36 four-class confusion matrices audited. **No independently human-verified Turkish gold labels, no validated educational deployment, and no S1/S2 empirical result are claimed.** CI runs synthetic fixtures, not the private original student corpus.
+
+**Current project report:** [TEKNOFEST 2242 Education research report](paper/TEKNOFEST_2242_EGITIM_RAPORU_TR.md). **Independent validation plan:** [TR_INDEPENDENT_VALIDATION_PLAN](docs/TR_INDEPENDENT_VALIDATION_PLAN.md). **Detailed T4 outputs:** [T4_REAL_PROXY](paper/T4_REAL_PROXY_2026-10-11.md).
 
 ## Quick start (no data download)
 
@@ -20,7 +22,7 @@ python -m scripts.run_demo
 
 Demo labels and scores must never be cited as real student outcomes.
 
-## Real data (later phase)
+## Real data (researcher-local workflow; keep originals unchanged)
 
 ```bash
 python download_data.py --data-dir data/raw
