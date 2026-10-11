@@ -31,7 +31,9 @@ def fake_reports(tmp_path):
                     "n_rows": sum(ns), "n_english_question_groups": 15,
                     "confusion_matrix": [list(row) for row in cm],
                     "per_class": {
-                        label: dict(derived["per_class"][label]) for label in LABELS},
+                        label: {("f1-score" if k == "f1_score" else k): value
+                                for k, value in derived["per_class"][label].items()}
+                        for label in LABELS},
                     **{key: derived[key] for key in (
                         "macro_f1", "weighted_f1", "accuracy")},
                 }
