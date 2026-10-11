@@ -13,6 +13,7 @@ import pandas as pd
 import pytest
 
 from audit_dataset import SPLITS, EXPECTED
+from download_data import REVISION
 from audit_translation_quality import scan_rows
 from audit_translation_corpus import concept_of, Group, _compare_sample, run
 
@@ -77,7 +78,10 @@ def _make_fixture(root: Path):
         }
 
     (source / 'file_manifest.json').write_text(
-        json.dumps({'revision': 'synthetic-fixture-revision'}), encoding='utf-8'
+        json.dumps({'revision': REVISION,
+                    'files': [{'filename': f'{STEM[s]}-00001.csv',
+                               'sha256': source_hashes[s]} for s in SPLITS]}),
+        encoding='utf-8'
     )
     model_key = 'FAKE_SYNTHETIC_MODEL_KEY'
     (translated / 'translation_manifest.json').write_text(
