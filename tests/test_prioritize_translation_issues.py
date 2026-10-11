@@ -94,7 +94,7 @@ def test_split_mismatch_or_rule_drift_is_blocked():
     with pytest.raises(ValueError, match="split"):
         aggregate(changed, report)
     changed = [dict(x) for x in flags]
-    changed[0]["priority"] = "MEDIUM"
+    changed[3]["priority"] = "MEDIUM"
     with pytest.raises(ValueError, match="priority"):
         aggregate(changed, report)
 
