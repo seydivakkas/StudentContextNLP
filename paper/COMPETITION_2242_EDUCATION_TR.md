@@ -26,7 +26,7 @@ Soru metnini öğrenci açıklamasına eklemek, eğitim sırasında hiç görül
 - Tam 4 splitin tüm satırlarına uygulanabilir offline EN→TR çeviri motoru, model ve veri SHA-256 izlenebilirliği.
 - Özgün öğrenci hataları düzeltilemez; kaynak ve hedef metinler birlikte saklanır.
 - Tüm otomatik etiket aktarımı **UNVERIFIED_TRANSFER**; insan doğrulaması olmadan Türkçe altın standart veya bilimsel skor ilan edilemez.
-- 240 kayıtlık sınıf/split dengesi gözetilen örneklem; iki bağımsız değerlendiriciyle anlamsal sadakat, hata korunumu, etiket uygunluğu ve anlaşmazlık ölçülür.
+- **T3.0 örneklemi oluşturuldu:** 240 kayıt; her splitten 60 ve her sınıftan 60, örneklemin 73 satırı sezgisel bayraklı. İki bağımsız değerlendirici için [etiket körü iki aşamalı protokol](../docs/TR_REVIEW_PROTOCOL_T3.md) tanımlandı; insan etiketleri hâlâ bekliyor.
 - İlk İngilizce baseline dondurulur; Türkçe sonuçlara yalnız kalite kapısından sonra geçilir. Çevrilmiş İngilizce öğrenci yanıtları, doğal olarak Türkçe yazılmış yanıtları temsil etmez.
 - v0.2'nin gerçek yerel EN→TR aday çevirisi 10.804/10.804 satırda tamamlandı; 2.823 kayıt sezgisel kalite incelemesi için işaretlendi. İnsan doğrulaması henüz yapılmadı.
 
@@ -45,7 +45,7 @@ Soru metnini öğrenci açıklamasına eklemek, eğitim sırasında hiç görül
 
 Denetim sırasında özgün train'de **6 çelişkili yanıt üçlüsü / 15 satır**, Test-UD'de **1 üçlü / 6 satır** görüldü; Test-UA'da train ile 24 ortak normalize üçlü vardır; Test-UQ'da train ile ortak soru ve ortak üçlü yoktur. Başlangıç veri kümeleri değiştirilmemiştir. Tek bir bootstrap yöntemi, tekrarlar ve 15 soru kümesi nedeniyle genelleme gücü sınırlıdır. Bunların tamamı değerlendirmede açıkça belirtilmelidir.
 
-**Araştırma sonraki adımı:** [T2 gerçek çeviri kaydı](T2_REAL_TR_TRANSLATION_2026-10-10.md) sonrasında 240 kayıtta iki bağımsız değerlendiricinin anlam, bilimsel yanılgı ve etiket korunumu denetimi. Aktarılan etiketler insan kontrolü olmadan Türkçe altın standart sayılmayacaktır.
+**Araştırma sonraki adımı:** [T2 gerçek çeviri kaydı](T2_REAL_TR_TRANSLATION_2026-10-10.md) ve tamamlanan T3.0 örneklemesi sonrasında 240 kayıtta iki bağımsız değerlendiricinin kör anlam/bilimsel yanılgı incelemesi, ardından etiket korunumu denetimi. Aktarılan etiketler insan kontrolü olmadan Türkçe altın standart sayılmayacaktır.
 
 ## 2026 jüri değerlendirme ölçütlerine kanıt eşlemesi
 
@@ -83,7 +83,7 @@ Bu dört ölçüt **2026 çağrı metninden** alınmıştır; ölçütlerin 2027
 | P3 | Son rapor, görseller, sunum / başvuru kanıtları | BEKLENİYOR |
 | T1 | Doğrudan Argos EN→TR model kurulumu ve model SHA-256 | PASS: yerel model, SHA-256 kaydı |
 | T2 | Dört gerçek veri splitinde %100 aday çeviri ve denetim manifesti | PASS: 10.804/10.804 aday, 4/4 satır/etiket kontrolü |
-| T3 | 240 kayıt, iki bağımsız uzman, Cohen kappa | BEKLENİYOR |
+| T3 | 240 kayıt, iki bağımsız uzman, Cohen kappa | T3.0 örneklem PASS; iki bağımsız insan incelemesi ve kappa bekliyor |
 | T4 | Kalite eşiğine bağlı Türkçe gerçek benchmark ve dil karşılaştırması | BEKLENİYOR |
 
 ## Kaynaklar
