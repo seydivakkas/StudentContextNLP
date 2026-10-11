@@ -58,3 +58,22 @@ Aynı çıktı klasöründe rapor zaten varsa script **üzerine yazmaz**, farkl�
 | T4 Türkçe etiketli bilimsel altın standart performansı | NOT_CLAIMED; yalnız exploratory pseudo/proxy-label karşılaştırma yapılabilir |
 
 Herhangi bir metni düzeltirken **öğrencinin özgün bilimsel hatasını düzeltmeyin**; yalnız kaynak yanıtı doğru temsil eden çeviriyle değiştirmek amaçlanmalı ve eski sürüm, kural, kanıt ve SHA özetleri korunmalıdır.
+
+## T3-AUTO v0.2 — Bilimsel anlam tersine dönüşleri ve düzeltme önerileri
+
+v0.1'e ek olarak **SATURATION_POLARITY_REVERSED** (doymuş→doymamış) ve **MILLILITER_AS_LITER** (mL→L) kontrolü uygulanır. Kullanıcının sağladığı 240 kaydın asistan ortamında yeniden taranması sonucunda **112/240 inceleme adayı (53 yüksek, 59 orta), 128 işaretlenmeyen kayıt ve 220 kural tetiklemesi** elde edildi. İki yeni kontrol 10 ilave hücre bulgusu üretti. Bu sayıların Windows kullanıcısı tarafından bağımsız tekrar çalıştırılması henüz beklenmektedir.
+
+Yeni sonuçlar **hatalı çevirilerin doğrulanmış sayısı değildir**. mL→L örnekleri birim büyüklüğünü 1000 kat değiştirerek bilimsel anlama doğrudan zarar verebilir; bu işaretleyici yine kanıt adayıdır.
+
+**Windows komutları (önce GitHub geliştirme dalını çek):**
+
+```powershell
+.\.venv\Scripts\python.exe audit_translation_quality.py --input reports/tr_review/blind_stage1/review_A_blind.csv --out reports/tr_auto_qa_v03
+.\.venv\Scripts\python.exe propose_translation_corrections.py --flags reports/tr_auto_qa_v03/translation_flags.csv --out reports/tr_auto_repair_v01
+```
+
+`repair_suggestions.csv` kaynak/hedef metni, kuralı, kavramsal Türkçe karşılık önerisini, metin kanıt hash'ini içerir; `repair_manifest.json` toplamları ve giriş SHA-256'sını içerir.
+
+**Güvenlik koşulu:** öneriler `auto_apply=false`, `human_reviewed=false`, `derived_label_validated=false` statüsündedir. Soru/referans/öğrenci yanıtları, beşli/dörtlü etiketler, orijinal makine çevirileri ve A/B formları otomatik değiştirilmez. Tam cümle düzeltmesi her zaman bağlam gerektirebilir; öneriyi doğrudan değiştirilmiş veri olarak uygulama.
+
+İnceleme adayları, otomatik gerçek hata oranı/precision/recall gibi gösterilemez. T3-HUMAN yapılmadı; T4 yapılırsa aktarılmış etiketlerle yapılan keşifsel proxy deney olarak raporlanmalıdır.
