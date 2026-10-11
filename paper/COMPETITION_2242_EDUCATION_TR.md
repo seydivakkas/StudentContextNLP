@@ -1,5 +1,8 @@
 # TEKNOFEST 2242 — Eğitim Kategorisi | StudentContextNLP
 
+> **TARİHSEL PLAN BELGESİ — GÜNCEL NİHAİ BİLİMSEL TASLAK DEĞİL.** Bu dosyadaki "Türkçe deney bekleniyor" ve önceki kabul kapıları yazıldıkları tarihin ara durumudur. P0–T4'ün güncel gerçek Windows sonuçları, sınıf bazlı F1 ve 76 testli metrik kontrolü için **[tam TEKNOFEST Eğitim raporu](TEKNOFEST_2242_EGITIM_RAPORU_TR.md)** ve **[bağımsız doğrulama planı](../docs/TR_INDEPENDENT_VALIDATION_PLAN.md)** kullanılmalıdır. 2026 başvuruları kapanmıştır; bu çalışma bir sonraki uygun çağrıya hazırlık içindir.
+
+
 > **Durum:** GELECEK ÇAĞRIYA HAZIRLIK TASLAĞI. 2026 başvuruları kapanmıştır; 2027 yarışma takvimi ve resmî rapor şablonu henüz teyit edilmemiştir. Bu belge 2026 2242 rehberiyle uyumlu bir çalışma planıdır, resmî başvuru formu değildir. P0 ve ilk gerçek İngilizce B0–B3 Test-UQ sonuçları 10 Ekim 2026'da araştırmacının Windows ortamında üretildi. Türkçe 10.804 aday kaydın yerel çevirisi tamamlandı; insan doğrulaması ve S1/S2 sonuçları henüz yoktur.
 
 **Türkçe başlık:** Öğrenci Açıklamalarının Soru Bağlamına Duyarlı Anlamsal Değerlendirilmesi: Türkçe Veri Uyarlaması ve Diller Arası Karşılaştırmalı Analiz.
