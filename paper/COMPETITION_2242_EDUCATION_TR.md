@@ -30,6 +30,12 @@ Soru metnini öğrenci açıklamasına eklemek, eğitim sırasında hiç görül
 - İlk İngilizce baseline dondurulur; Türkçe sonuçlara yalnız kalite kapısından sonra geçilir. Çevrilmiş İngilizce öğrenci yanıtları, doğal olarak Türkçe yazılmış yanıtları temsil etmez.
 - v0.2'nin gerçek yerel EN→TR aday çevirisi 10.804/10.804 satırda tamamlandı; 2.823 kayıt sezgisel kalite incelemesi için işaretlendi. İnsan doğrulaması henüz yapılmadı.
 
+## T3 otomatik kalite ön taraması (11 Ekim 2026)
+
+Araştırmacının yüklediği 240 kör çeviri örneği asistan ortamında [çevrimdışı QA modülü](../audit_translation_quality.py) ile tarandı. 47 yüksek, 61 orta öncelikli **şüpheli çeviri adayı** işaretlendi; 132 kayıt kuralca işaretlenmedi. Toplam 210 hücre bazlı kural bulgusu üretildi. Bu sayıların **hiçbiri doğrulanmış yanlış çeviri adedi, hata oranı veya otomatik doğruluk kanıtı değildir**. Bazı örneklerde açık sözcük anlamı kaymaları görüldü (ör. `bulb` → `otobüs`; `calcite` → `analiz`).
+
+İki bağımsız insan değerlendiriciyle kappa çalışması kullanıcı tercihiyle şu aşamada **yapılmıyor**. Çalışma yönteminde bu bölümün adı **otomatik destekli niteliksel çeviri hata analizi** olarak değiştirildi. Çeviri kaynaklarından aktarılan etiketler yine `UNVERIFIED_TRANSFER` durumunda; Türkçe altın standart yoktur. Ayrıntılı bilimsel sınırlar: [T3 otomatik QA protokolü](../docs/TR_AUTOMATED_QA_T3.md). Türkçe model kıyaslamaları yapılırsa bunlar yalnızca projeksiyon etiketli **exploratory proxy** deneyler olarak raporlanacaktır.
+
 ## P1 bulguları — 10 Ekim 2026 gerçek SciEntsBank Test-UQ
 
 **Kaynak:** Araştırmacının Windows'ta çalıştırdığı `train_lexical.py` terminal çıktısı. Ham veriler ve tahmin kayıtları yerelde saklanmaktadır; GitHub Actions gerçek veri deneyini çalıştırmadı. `reports/P0_DECISION.md` ile uyarıların koşullu kabulü kaydedildi. Test-UQ: 733 öğrenci yanıtı ve 15 görülmemiş soru.
@@ -83,7 +89,7 @@ Bu dört ölçüt **2026 çağrı metninden** alınmıştır; ölçütlerin 2027
 | P3 | Son rapor, görseller, sunum / başvuru kanıtları | BEKLENİYOR |
 | T1 | Doğrudan Argos EN→TR model kurulumu ve model SHA-256 | PASS: yerel model, SHA-256 kaydı |
 | T2 | Dört gerçek veri splitinde %100 aday çeviri ve denetim manifesti | PASS: 10.804/10.804 aday, 4/4 satır/etiket kontrolü |
-| T3 | 240 kayıt, iki bağımsız uzman, Cohen kappa | T3.0 örneklem PASS; iki bağımsız insan incelemesi ve kappa bekliyor |
+| T3 | 240 kayıt üzerinden otomatik destekli çeviri kalite ön taraması; insan uzmanlık doğrulaması ayrı | T3-AUTO: 240/240 tarandı, 108 inceleme adayı; T3-HUMAN NOT_PERFORMED, kappa üretilmeyecek |
 | T4 | Kalite eşiğine bağlı Türkçe gerçek benchmark ve dil karşılaştırması | BEKLENİYOR |
 
 ## Kaynaklar
