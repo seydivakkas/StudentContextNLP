@@ -96,7 +96,15 @@ Ayrı `propose_translation_corrections.py` aracı yalnız **etiketsiz, geri alı
 
 Asistan, kullanıcı tarafından yüklenen **aynı 240 kör İngilizce–Türkçe çifti** üzerinde v0.2 kurallarını yeniden çalıştırıp kaynak kavramı bazında sınıflandırdı. Olumsuzluk: **56 tetiklenme / 54 ayrı kayıt / 37 ayrı alan–kaynak–hedef çift**; İngilizce kalan terimler: **41 / 23 / 22**; `bulb`: **21 / 11 / 8**; sayılar: **17 / 17 / 10**; `solid`: **11 / 10 / 7**; `calcite`: **10 / 3 / 7**; mililitre/litre: **8 / 8 / 6**. Bunlar insan tarafından doğrulanmış hata adedi veya gerçek çeviri hata oranı değildir.
 
-Yeni `audit_translation_corpus.py` modülü tüm **10.804** kayıt için orijinal Parquet/SHA ve çeviri manifestlerini denetleyip aynı kontrolleri soru, referans ve öğrenci açıklamasında çalıştırır; kaynak kavramı/grup/tekrar sayımlarını birbirinden ayırır. Tam veri çalışması araştırmacının Windows sisteminde **henüz yapılmadı**. Ayrıntılı yöntem ve kullanım: [T3 tam korpus QA](../docs/TR_FULL_CORPUS_QA_T3.md). İlk sentetik tam-kapsam regresyon testleri GitHub CI'de PASS; bu bir gerçek veri doğrulaması değildir.
+Yeni `audit_translation_corpus.py` modülü tüm **10.804** kayıt için orijinal Parquet/SHA ve çeviri manifestlerini denetleyip aynı kontrolleri soru, referans ve öğrenci açıklamasında çalıştırır; kaynak kavramı/grup/tekrar sayımlarını birbirinden ayırır. Tam veri denetimi araştırmacının Windows sisteminde **11 Ekim 2026'da tamamlandı**. Ayrıntılı yöntem ve kullanım: [T3 tam korpus QA](../docs/TR_FULL_CORPUS_QA_T3.md). İlk sentetik tam-kapsam regresyon testleri GitHub CI'de PASS; bu bir gerçek veri doğrulaması değildir.
+
+### T3-AUTO tam gerçek korpus taraması — 11 Ekim 2026
+
+Araştırmacının Windows ortamında **49/49** yazılım regresyon testi geçti; İngilizce ve Türkçe kaynak manifestlerinin SHA-256 ve 240 donmuş örnek eşleştirmesi doğrulandı. Toplam **10.804/10.804** satır tarandı: **1.930 HIGH**, **2.278 MEDIUM** uyarılı kayıt, **6.596 kuralca işaretlenmeyen** kayıt ve toplam **7.412** metin alanı/kural bulgusu.
+
+Farklı kaynak kavram: **28**. Tekrarlanan kural/metin kanıt grubu: **155**. En sık kavramlar: olumsuzluk 2.081 tetiklenme / 1.952 farklı kayıt / 576 farklı alan–metin; `bulb` 655 / 306 / 81; mililitre 397 / 391 / 66; eğim 346 / 283 / 23. Bu sayılar doğrulanmış çeviri hataları değildir ve toplandıklarında tekil hatalı satır sayısını vermez. Gerekçeli tam gerçek veri kaydı: [T3_FULL_CORPUS_REAL_2026-10-11.md](T3_FULL_CORPUS_REAL_2026-10-11.md).
+
+Bunu izleyen `prioritize_translation_issues.py` kök neden modülü, tekrar eden kural tetiklenmelerini **kavram/alan/kaynak–hedef metin** anahtarına göre birleştirir; anlam tersine dönüşü, özgül yanlış terim ve diğer yüzeysel şüpheleri ayrı sıraya koyar. Tam 10.804 satırın bu yeni önceliklendirme aşaması henüz Windows üzerinde çalıştırılmadı. **T3-HUMAN yapılmadı, altın standart ve insan uyumu iddiası yoktur.**
 
 ## Araştırma etiği ve yeniden üretilebilirlik
 
