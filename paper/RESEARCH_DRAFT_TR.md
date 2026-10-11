@@ -52,11 +52,21 @@ Sabit veri: SciEntsBank (İngilizce), 4 türetilmiş sınıf: Correct, Incomplet
 - **Sınırlılıklar:** Sadece 15 bağımsız soru; 30 Test-UQ tekrar kaydı; train etiket çelişkileri; Other heterojen sınıfı; sınıf dengesizlikleri. Tek bootstrap yöntemi ve bu küçük soru sayısı, güçlü genelleme/istatistiksel kesinlik iddiasına yetmez.
 - **Araştırmanın devamı:** Per-class F1/karışıklık matrisi, tekrar/çelişki duyarlılık analizi, validasyon skorları, CPU maliyeti. Bu analizlerde resmi Test-UQ'ya göre yeniden hiperparametre seçimi **yapılmayacak**.
 
-## P2 — Türkçe veri uyarlaması: BEKLENİYOR
+## P2 — Türkçe veri uyarlaması: 10.804 aday çeviri tamamlandı (10 Ekim 2026)
 
-Tam 10.804 satır için yerel Argos EN→TR aktarımı hedefleniyor. Çeviriler `UNVERIFIED_MACHINE_TRANSLATION`, aktarılan etiketler `UNVERIFIED_TRANSFER` olarak kalacak. İnsan doğrulaması olmadan bunlar Türkiye'deki öğrenci cevapları veya Türkçe altın standart olarak tanıtılamaz.
+Araştırmacının Windows bilgisayarında, yerel Argos EN→TR modeliyle dört SciEntsBank bölümünün tamamı (10.804/10.804) **makine çevirisi adayı** olarak üretildi. Kurulu model SHA-256'sı `2d553a00880a0c21dea5b1c375535659e6bf18c9bf2ce9847c2a2fd2ff50316a` olarak kaydedildi. Kaynak/hedef kayıt sırası, `id` ve özgün etiketler 4/4 splitte eşleşti.
 
-İnsan değerlendirmesi, yalnız metin çevrimi değil, bilimsel yanlışlığın/olumsuzlamanın ve etiket anlamının korunmasını sınayacak. Türkçe dört-sınıf deneyleri, çeviri kalite kapısından sonra *ayrı raporlanacak*.
+| Bölüm | Aday satır | Otomatik kalite uyarısı bulunan satır |
+|---|---:|---:|
+| Train | 4.969 | 1.315 |
+| Test-UA | 540 | 153 |
+| Test-UQ | 733 | 258 |
+| Test-UD | 4.562 | 1.097 |
+| **Toplam** | **10.804** | **2.823 (%26,1)** |
+
+Çeviri statüsü **`FULL_CANDIDATE / UNVERIFIED_MACHINE_TRANSLATION`** ve aktarılan etiketler **`UNVERIFIED_TRANSFER`** olarak korundu. Uyarılar anlamsal hata kanıtı veya çevirinin güvenilirlik oranı değildir. Ayrıntılı üretim ve bilimsel sınır raporu: [T2 çeviri kaydı](T2_REAL_TR_TRANSLATION_2026-10-10.md).
+
+**T3 bekliyor:** 240 sınıf/split kapsamlı örnek, iki bağımsız değerlendirici, özgün bilimsel hata ve etiket korunumu, anlaşmazlık çözümü. Bu kapı tamamlanmadan Türkçe altın standart ya da bilimsel TR Macro-F1 ilan edilmeyecek.
 
 ## Araştırma etiği ve yeniden üretilebilirlik
 
@@ -71,4 +81,4 @@ Tam 10.804 satır için yerel Argos EN→TR aktarımı hedefleniyor. Çeviriler 
 3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
 4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki teknik görev:** Yerel Argos EN→TR modelinin gerçek kurulumu ve iki satır/bölüm şeklinde yazılım smoke kontrolü; sonrasında tam 10.804 aday çeviri.
+**Sonraki teknik görev:** Yerel Türkçe çeviri kalite örneklemesi ve bağımsız insan değerlendirmesi (T3).
