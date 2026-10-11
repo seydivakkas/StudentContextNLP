@@ -270,7 +270,7 @@ def run(original_dir: Path, old_tr: Path, new_tr: Path, comparison: Path, out: P
         "train_rows": len(train_en),
         "train_fit_rows": len(indices), "train_validation_rows": len(validation_indices),
         "target_classes": LABELS,
-        "hyperparameter_selection_locked_before_any_test_data_loaded": True,
+        "hyperparameter_selection_locked_before_any_test_metrics_computed": True,
         "condition_selected_C": selected,
         "translation_repair_C_frozen_from_original_TR": True,
     }
