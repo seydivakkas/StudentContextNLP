@@ -122,7 +122,7 @@ Araştırmacının yüklediği 37 P1/P2 kaynak–hedef çeviri adayından oluşt
 
 Yeni çevrimdışı kod (`import_ai_draft_patch.py`, `compare_translation_versions.py`): (1) ZIP içindeki özel metinleri GitHub'a koymadan manifest SHA-256, 37 değişmez kanıt alanı ve 34/3 karar kontrolü ile ayrı bir yerel AI_DRAFT planı üretir; (2) mevcut `apply_translation_patch_plan.py` yalnız kanıta bağlı, tam cümle ve açık gerekçeli önerilerle **ayrı** `data/tr_v0_2_1/` oluşturmayı dener; (3) yeni ve eski 10.804 satırın üç metin alanında 7.412 özgün QA kural bulgusunu yeniden üretme, İngilizce kaynak/`id`/etiket değişmezliği, birebir uygulama kanıtı ve eklenen yüksek öncelikli uyarı denetimleri çalıştırır. Sonuçlar `reports/tr_compare_v021/` altında yalnız yerel tutulur. [Uygulama/kabul protokolü](../docs/TR_V021_REAL_DRAFT_APPLY_COMPARE.md).
 
-**Gerçek 10.804 satırlık v0.2.1 uygulaması ve karşılaştırmalı QA henüz Windows araştırmacı çıktısıyla doğrulanmadı.** CI başarıları yazılımın sentetik davranışını gösterir; çeviri semantiğinin doğruluğu konusunda bir kabul iddiası değildir. `UNVERIFIED_TRANSFER` etiketleri korunur, sonraki Türkçe model deneyi keşifsel aktarılmış etiketli proxy olarak raporlanır.
+**Gerçek 10.804 satırlık v0.2.1 uygulaması ve karşılaştırmalı QA, araştırmacının Windows bilgisayarında 11 Ekim 2026'da çalıştırıldı; teknik kapı PASS.** 64/64 yazılım regresyon testi, AI_DRAFT SHA ve tüm orijinal kaynakların SHA bütünlüğü PASS. 34 tam eşleşme önerisi yeni sürümde uygulandı, 3 belirsiz aday bekletildi; 1.604 farklı kaydın 1.748 Türkçe alan örneği değişti. Toplam heuristik kural tetiklenmesi **7.412→4.926** (−2.486; −%33,54), yeni HIGH kural regresyonu **0**. Bu, çeviri semantiğinin doğruluğunun bağımsız kabulü değildir. **Orijinal İngilizce kaynak/etiketler ve eski v0.2 aday veri değişmedi; `UNVERIFIED_TRANSFER` korunur.** Teknik sınırlar ve splitler: [gerçek v0.2.1 karşılaştırma kabulü](../docs/TR_V021_REAL_DRAFT_APPLY_COMPARE.md).
 
 ## Araştırma etiği ve yeniden üretilebilirlik
 
@@ -137,4 +137,4 @@ Yeni çevrimdışı kod (`import_ai_draft_patch.py`, `compare_translation_versio
 3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
 4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki teknik görev:** 37 adayın gerçek İngilizce–Türkçe tam cümlelerini kanıtla değerlendirmek; açık semantik düzeltmeleri `AI_DRAFT` olarak gerekçelendirmek, belirsizleri `PENDING/SKIP` bırakmak. T3-HUMAN şu anda `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
+**Sonraki teknik görev:** v0.2 ve v0.2.1 gerçek kayıtlarında değişiklik/kural dağılımı analizi; ardından aynı veri bölümleri ve sabit sınıf eşlemesiyle Test-UQ üzerinde İngilizce/Türkçe B0–B3 karşılaştırmalı *exploratory projected-label proxy* deneyleri. Q-gruplu güven aralığı ve veri sızıntısı denetimleri zorunlu. T3-HUMAN `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
