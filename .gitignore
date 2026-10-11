@@ -19,3 +19,7 @@ reports/**
 *.csv
 .env
 .env.*
+# v0.2 derived Turkish dataset, caches and local translation model metadata
+data/tr_*/
+models/argos_en_tr_manifest.json
+*.argosmodel
