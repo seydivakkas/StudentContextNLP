@@ -6,6 +6,10 @@
 
 Amaç **çeviri sadakatini ve orijinal öğrenci yanılgısı/etiket niteliğinin korunmasını ölçmek**, otomatik olarak altın standart Türkçe veri üretmek değildir. Araştırma kaynağı İngilizce SciEntsBank'tir; Türkçeye çevrilen yanıtlar Türkiye'deki öğrencilerin doğrudan yazdığı doğal Türkçe metinlerle eşdeğer sayılmaz.
 
+**T3.1 gerçek Windows doğrulaması (11 Ekim 2026):** A ve B için 240'ar boş, özgün etiket ve kalite bayrakları çıkarılmış form üretildi; kaynak değerlendirme dosyaları değiştirilmedi. İnsan değerlendirmesi bekliyor.
+
+**Körleme sınırı:** `class4`, `quality_flags`, `id` ve `split` sütunları mevcut değildir, fakat `item_key` değerinin `train:...` gibi öneki veri bölümünü dolaylı biçimde gösterebilir. Bu nedenle uygulanan körleme **etiket ve kalite bayrağı körlemesidir**, tam veri bölümü körlemesi değildir. Böyle bir bilgiyi kullanarak derecelendirme yapılmamalıdır.
+
 **Örnekleme:** `sample_translation_review.py` seed=20261010, split ve sınıf kapsamı + soru çeşitliliği + kalanlar arasından rastgele tamamlama. Dört split ve dört etiketin *marjinal dağılımları* dengelidir. **Bu, tüm split×sınıf hücrelerinin eşit olduğu veya istatistiksel olasılık örneklemi olduğu anlamına gelmez.** Bu tabakalı örneklemin ham oranını evren oranıymış gibi sunma. `quality_flags` 73/240 yalnızca yüzeysel işaretlerdir; doğrulanmış hata oranı değildir.
 
 ## Aşama 1 — Etikete ve otomatik uyarılara kör değerlendirme
