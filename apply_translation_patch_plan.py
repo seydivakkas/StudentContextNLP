@@ -74,6 +74,8 @@ def load_patch_proposals(priority_dir: Path, plan_dir: Path, data_dir: Path):
                  "Patch plan schema mismatch")
         rows = list(reader)
     _require(len(rows) == plan["candidate_count"], "Number of patch candidates was modified")
+    _require([r["cluster_id"] for r in rows] == plan.get("selected_cluster_ids"),
+             "Selected evidence identities or their ordering changed since the frozen plan")
     seen_ids, seen_pairs, patches = set(), set(), {}
     for r in rows:
         cid = r["cluster_id"]
