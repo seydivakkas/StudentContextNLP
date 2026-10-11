@@ -1,5 +1,8 @@
 # StudentContextNLP v0.1/v0.2 — Gerçek Araştırma Kaydı
 
+> **Kronolojik geliştirme günlüğü:** Eski ara aşamalarda geçen `bekliyor / yapılmadı / çalıştırılmadı` ifadeleri o ana ait tarihsel notlardır. 11 Ekim 2026 itibarıyla P0–T4 güncel kabulü ve gerçek sınıf tabloları için **[2242 tam araştırma raporu](TEKNOFEST_2242_EGITIM_RAPORU_TR.md)**, [T4 metrik kabulü](T4_REAL_PROXY_2026-10-11.md) ve [bağımsız doğrulama planı](../docs/TR_INDEPENDENT_VALIDATION_PLAN.md) esas alınmalıdır.
+
+
 **Sabit proje başlığı:** Öğrenci Açıklamalarının Soru Bağlamına Duyarlı Anlamsal Değerlendirilmesi: Türkçe Veri Uyarlaması ve Diller Arası Karşılaştırmalı Analiz.
 
 **Yarışma hedefi:** TEKNOFEST 2242 Eğitim kategorisi, gelecek çağrı değerlendirmesine hazırlık. Bu belge nihai yarışma raporu değildir.
