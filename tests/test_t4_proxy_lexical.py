@@ -60,7 +60,6 @@ def test_changed_labels_source_text_or_gold_claim_are_rejected():
 
 
 def test_question_group_partition_is_fixed_and_has_zero_overlap():
-    rng = np.random.default_rng(20261011)
     # Large synthetic set to ensure each label appears in both partitions.
     q = [f"group {i}" for i in range(80)]
     df = pd.DataFrame({
@@ -89,8 +88,7 @@ def test_paired_cluster_context_gain_difference_in_difference():
     }
     a = _macro_by_clusters(y, p, groups, reps=40, seed=1)
     b = _macro_by_clusters(y, p, groups, reps=40, seed=1)
-    assert abs(a["point"] - (1.0 - 0.1 * 2 / 5)) > 0  # no hard-coded F1 shortcut
-    assert a["point"] > 0.6
+    assert a["point"] == pytest.approx(0.9)
     assert a == b
     assert a["cluster_count"] == 4
     assert len(a["percentile_95_ci"]) == 2
