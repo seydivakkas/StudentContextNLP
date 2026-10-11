@@ -18,6 +18,11 @@ def test_specific_scientific_false_friends():
         ("Mix a solid in water.", "Suya sağlam katın.", "CHEMICAL_SOLID_AS_STURDY"),
         ("The windows fogged up.", "Pencereler parlak oldu.", "FOGGED_GLASS_AS_SHINY"),
         ("Use no slope.", "Göçücü kullanın.", "NO_SLOPE_AS_NONSENSE"),
+        ("Store food.", "Mağaza yemeği.", "STORE_FOOD_AS_SHOP"),
+        ("Because it is skinny and curved.", "Çünkü cilt ve eğri.", "SKINNY_AS_SKIN"),
+        ("It can also evaporate.", "Tahliye edilebilir.", "EVAPORATE_AS_DISCHARGE"),
+        ("They get eroded away.", "Erodediyorlar.", "ERODE_AS_ENGLISH_REMNANT"),
+        ("Does it have juice.", "Su var.", "JUICE_AS_WATER"),
     ]
     for en, tr, rule in examples:
         flags = analyze_pair("x", "question", en, tr)
