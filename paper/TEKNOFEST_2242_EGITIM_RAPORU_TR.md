@@ -19,7 +19,7 @@
 6. KAYNAKLAR
 7. EKLER VE YENİDEN ÜRETİLEBİLİRLİK
 
-**Tablolar listesi:** Tablo 1 — SciEntsBank bölümleri; Tablo 2 — B0–B3 modelleri; Tablo 3 — İngilizce Test-UQ; Tablo 4 — Türkçe QA; Tablo 5 — üç varyant Macro-F1; Tablo 6 — eşlenik sürüm farkları; Tablo 7 — B2 sınıf F1; Tablo 8 — B1 sınıf F1; Tablo 9 — bilimsel/teknik kabul kapıları.
+**Tablolar listesi:** Tablo 1 — SciEntsBank bölümleri; Tablo 2 — B0–B3 modelleri; Tablo 2A — gerçek iş-zaman çizelgesi; Tablo 3 — İngilizce Test-UQ; Tablo 4 — Türkçe QA; Tablo 5 — üç varyant Macro-F1; Tablo 6 — eşlenik sürüm farkları; Tablo 7 — B2 sınıf F1; Tablo 8 — B1 sınıf F1; Tablo 9 — bilimsel/teknik kabul kapıları.
 
 **Şekiller listesi:** Şekil 1 — metinsel araştırma işlem zinciri.
 
