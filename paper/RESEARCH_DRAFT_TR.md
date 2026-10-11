@@ -86,6 +86,12 @@ Tespit edilen somut hata türlerine örnekler: `calcite` → `analiz`, `bulb` �
 
 İnsan kalite doğrulaması olmadan **T4'te** elde edilecek Türkçe karşılaştırmalar yalnız *projected-label exploratory proxy experiment* şeklinde sunulabilir; bağımsız Türkçe öğrenci verisinde doğrulama olarak sunulamaz.
 
+### T3-AUTO v0.2 — Yeni bilimsel anlam koruma kontrolleri
+
+Önceki 108/240 sonuçları **v0.1**, aynı 240 yerel yükleme üzerinde asistan tarafından yeniden çalıştırılan ek olumsuz kavram/birim kontrolleri ise **v0.2** sürümüdür. Güncel v0.2 ön tarama: **112/240 aday**, **53 HIGH**, **59 MEDIUM**, **128 kuralca işaretlenmeyen** ve **220 hücre-kural tetiklenmesi**. Yeni kurallar `SATURATION_POLARITY_REVERSED` (ör. *saturated→doymamış*) ve `MILLILITER_AS_LITER` (ör. *100 milliliters→100 litre*) için toplam 10 ek alan bulgusu üretti. Tekrarlanan soru/cevaplar nedeniyle bu sayı 10 bağımsız hata örneği anlamına gelmez.
+
+Ayrı `propose_translation_corrections.py` aracı yalnız **etiketsiz, geri alınabilir kavram düzeltme önerileri** oluşturur; kaynak veriye, makine çevirisine veya insan inceleme formuna yazmaz. **Hiçbir satır otomatik düzeltilmedi, hiçbir insan değerlendirici/altın standart kararı üretilmedi.** Güncel çıktılar kullanıcının kendi Windows bilgisayarında tekrar çalıştırılmayı bekliyor. Ayrıntılar: [T3-AUTO protokolü](../docs/TR_AUTOMATED_QA_T3.md).
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
