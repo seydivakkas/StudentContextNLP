@@ -156,7 +156,8 @@ def audit(t4_file: Path, p1_file: Path, out: Path) -> dict:
                     actual = obj["per_class"][label]
                     expected_class = matrix["per_class"][label]
                     for column in ("support", "precision", "recall", "f1_score"):
-                        close(actual[column], expected_class[column],
+                        sklearn_key = "f1-score" if column == "f1_score" else column
+                        close(actual[sklearn_key], expected_class[column],
                               context+"/"+label+"/"+column)
                     if split == "test_uq":
                         class_rows.append({
