@@ -1,4 +1,8 @@
-# StudentContextNLP v0.1 — Yerel NLP Araştırma Deposu
+# StudentContextNLP — Yerel NLP Araştırma Deposu
+
+> **Güncel araştırma durumu (11 Ekim 2026):** P0 gerçek denetimi, İngilizce P1 B0–B3 ve çevrimdışı Türkçe v0.2/v0.2.1 keşifsel T4 karşılaştırması **Windows ortamında tamamlandı**. Son metrik denetiminde **76/76 test**, P1 `1e-8` tekrarı ve 36 karışıklık matrisi **PASS**. Doğal Türkçe öğrenci **gold etiketi ve insan doğrulaması yoktur**. Aşağıdaki eski v0.1 kurulum/plan anlatımının güncel bilimsel durumu temsil etmeyen kısımlarında bu not ve yeni rapor esastır.
+
+> **[TEKNOFEST 2242 güncel rapor](paper/TEKNOFEST_2242_EGITIM_RAPORU_TR.md)** · **[Bağımsız doğrulama planı](docs/TR_INDEPENDENT_VALIDATION_PLAN.md)** · **[Gerçek T4 sonuçları](paper/T4_REAL_PROXY_2026-10-11.md)**
 
 **Türkçe akademik başlık:** Öğrenci Açıklamalarındaki Anlamsal ve Bağlamsal Tutarsızlıkların Sınıflandırılmasında Soru Bağlamının Etkisi
 
@@ -14,11 +18,11 @@
 - Model seçimi yalnız **train içindeki question-grouped validation** üzerinde yapılır. Test-UA/UQ/UD hiçbiri hiperparametre seçimi için kullanılmaz.
 - Soru kümesi bootstrap güven aralıkları tanımlayıcıdır; eğitim müdahalesinin nedensel etkisini göstermez.
 - **API key/LLM API/bulut inference: kesinlikle yok.** Büyük dil modeli fine-tuning, RAG, agent, veritabanı yok. İlk eğitim CPU.
-- Türkçe veriler ve çokdilli encoder **gelecek araştırma sürümü v0.2**. Bu kaynak kodda henüz gerçek Türkçe etiketli sonuç yoktur.
+- Türkçe v0.2 ve AI_DRAFT v0.2.1 verileri yerel çevrimdışı aday sürümler olarak oluşturuldu; aktarılan İngilizce etiketli B0–B3 sonuçları **keşifsel** ve **Türkçe gold değildir**. Dondurulmuş çokdilli encoder S1/S2 gerçek karşılaştırması ayrıca beklemektedir.
 
 ## Mevcut durum ve dürüst sonuç politikası
 
-**Kod ve sentetik otomatik testler gerçekleştirilebilir.** SciEntsBank ham dosyaları henüz bu depoya alınmadı, gerçek P0 denetimi ve gerçek veri metrikleri **yapılmadı**.
+**Kamuya açık depoda ham SciEntsBank öğrenci kayıtları paylaşılmamıştır.** Ancak gerçek P0 denetimi, İngilizce P1 ve Türkçe T4 sözlüksel proxy deneyleri araştırmacının Windows bilgisayarında tamamlanıp toplu kanıtları GitHub'a kaydedilmiştir. CI sentetik yazılım testidir; gerçek veri ve altın standart Türkçe insan doğrulaması yerine geçmez.
 
 `data/demo` altında üretilen bütün kayıtlar uydurmadır. Sentetik denemelerin F1 veya grafiklerini makale, sonuç tablosu ya da gerçek öğrenci performansı olarak kullanma.
 
