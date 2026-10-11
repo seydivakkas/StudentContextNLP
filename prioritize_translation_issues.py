@@ -227,6 +227,8 @@ def run(qa_dir: Path, out: Path) -> dict:
     stage = out.with_name(out.name + ".part")
     if out == qa_dir or out.is_relative_to(qa_dir) or qa_dir.is_relative_to(out):
         raise ValueError("Output must not overwrite full QA inputs")
+    if out.parent != qa_dir.parent:
+        raise ValueError("Output must be a separate sibling folder inside the same reports directory")
     if out.exists() or stage.exists():
         raise FileExistsError("Existing reports will not be overwritten")
     summary_file = qa_dir / "full_qa_summary.json"
