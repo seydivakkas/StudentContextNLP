@@ -116,6 +116,14 @@ Araştırmacının Windows çıktısında **53/53 regresyon testi PASS**, tam 10
 
 Araştırmacının Windows ortamında **58/58 regresyon testi PASS**, `reports/tr_patch_plan_v021` içinde **39 uygun tekrarlanan P1/P2 kümesinden 37 tekil düzeltme plan adayı** üretildi. `milliliter` kavramında 7, `solid` 10, `bulb` 7, `evaporate` 4, `fogged_glass` 2, `plant_pot` 2 ve diğer kavramlarda adaylar bulunuyor. En büyük tekil plan adayı kaynak soru çevirisi 100 kaydı ilgilendiriyor. **Bu adaylar doğrulanmış çeviri hataları değildir**; `decision=PENDING` ve düzeltme metni boş, uygulanan değişiklik 0. Hiçbir insan uzman değerlendirmesi ya da Türkçe gold etiketi üretilmedi. [v0.2.1 öneri/uygulama protokolü](../docs/TR_PATCH_LAYER_V021.md).
 
+### SciEntsBank-TR v0.2.1 — AI_DRAFT uygulama ve tam-korpus karşılaştırmalı kalite kapısı (11 Ekim 2026)
+
+Araştırmacının yüklediği 37 P1/P2 kaynak–hedef çeviri adayından oluşturulan özel `AI_DRAFT` paketinde 34 açık `APPLY_EXPLORATORY`, 3 belirsiz `PENDING` önerisi vardır. Özgün donmuş düzeltme planı, veri v0.2 korpusu, A/B insan değerlendirme dosyaları değiştirilmez. Bu araştırma kapsamında **insan doğrulaması, gerçek Türkçe gold veri veya Cohen kappa bulunmamaktadır**.
+
+Yeni çevrimdışı kod (`import_ai_draft_patch.py`, `compare_translation_versions.py`): (1) ZIP içindeki özel metinleri GitHub'a koymadan manifest SHA-256, 37 değişmez kanıt alanı ve 34/3 karar kontrolü ile ayrı bir yerel AI_DRAFT planı üretir; (2) mevcut `apply_translation_patch_plan.py` yalnız kanıta bağlı, tam cümle ve açık gerekçeli önerilerle **ayrı** `data/tr_v0_2_1/` oluşturmayı dener; (3) yeni ve eski 10.804 satırın üç metin alanında 7.412 özgün QA kural bulgusunu yeniden üretme, İngilizce kaynak/`id`/etiket değişmezliği, birebir uygulama kanıtı ve eklenen yüksek öncelikli uyarı denetimleri çalıştırır. Sonuçlar `reports/tr_compare_v021/` altında yalnız yerel tutulur. [Uygulama/kabul protokolü](../docs/TR_V021_REAL_DRAFT_APPLY_COMPARE.md).
+
+**Gerçek 10.804 satırlık v0.2.1 uygulaması ve karşılaştırmalı QA henüz Windows araştırmacı çıktısıyla doğrulanmadı.** CI başarıları yazılımın sentetik davranışını gösterir; çeviri semantiğinin doğruluğu konusunda bir kabul iddiası değildir. `UNVERIFIED_TRANSFER` etiketleri korunur, sonraki Türkçe model deneyi keşifsel aktarılmış etiketli proxy olarak raporlanır.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
