@@ -132,6 +132,22 @@ Araştırmacının Windows makinesinde **66/66 yazılım testi PASS**, her iki a
 
 **T4 için önceden sabitlenen karşılaştırmalı araştırma tasarımı:** [TR_T4_PROXY_LEXICAL_PROTOCOL.md](../docs/TR_T4_PROXY_LEXICAL_PROTOCOL.md). Aynı gerçek SciEntsBank kaynak kayıtları/özgün sınıf eşlemesi üzerinden İngilizce, Türkçe v0.2 ve AI_DRAFT Türkçe v0.2.1 varyantlarında B0 çoğunluk, B1 öğrenci, B2 öğrenci+soru, B3 soru sözlüksel TF-IDF+LR modelleri çalıştırılacaktır. Soru grupları ve eğitim-validation kümesi **özgün İngilizce soruyla** sabitlenmiştir; Test-UQ 15 İngilizce soru kümesidir. Türkçe v0.2.1 için `C` v0.2'de yalnız train validation ile seçilen sabit değerlerden aktarılacak, test skoruna göre yeniden hiperparametre ayarlanmayacaktır. Birincil `MacroF1(B2)-MacroF1(B1)` ve TR-v0.2.1 eksi TR-v0.2 farkının farkı, 1.000 eşlenik soru-kümesi bootstrap yinelemesiyle raporlanacaktır. **Gerçek T4 model skoru henüz yoktur; yazılım sentetik testleri ayrı kabul edilecektir.** Özgün İngilizce P1 skorları kullanıcı tarafından bildirilen önceki ölçümlerle tekrar karşılaştırılacak ve hiçbir P1 modeli/verisi üzerine yazılmayacaktır.
 
+### T4 — Gerçek Test-UQ sözlüksel EN / TR-v0.2 / TR-v0.2.1 proxy sonuçları (11 Ekim 2026)
+
+Araştırmacının Windows gerçek yerel deneyinde **71/71 yazılım regresyon testi PASS**, 733 test-UQ kaydı/15 özgün İngilizce soru kümesi değerlendirildi. Bu deneyin **aktarılmış İngilizce etiketli** ve **insan-gold-olmayan** tam sonuç tablosu, karşılaştırmalar ve tanımlayıcı bootstrap aralığı: [T4 gerçek sonuç kaydı](T4_REAL_PROXY_2026-10-11.md).
+
+| Test-UQ Macro-F1 | İngilizce | Türkçe v0.2 | Türkçe v0.2.1 |
+|---|---:|---:|---:|
+| B0 | 0,145551 | 0,145551 | 0,145551 |
+| B1 açıklama | 0,295023 | 0,265198 | 0,263115 |
+| B2 açıklama+soru | 0,240599 | 0,274505 | 0,285392 |
+| B3 soru | 0,170172 | 0,149603 | 0,160710 |
+| **B2−B1** | **−0,054424** | **+0,009307** | **+0,022277** |
+
+TR v0.2.1 için bağlam-kazancı farklarının farkı (v0.2.1−v0.2): **+0,012970134720524773**; aynı özgün 15 İngilizce soru kümesiyle 1.000 eşlenik bootstrap %95 percentile aralığı **[0,0000448261; 0,0266094688]**. Aralığın sıfıra yakın alt sınırı, az bağımsız soru kümesi ve aynı Test-UQ'nun önceki çalışma aşamalarında kullanılmış olması dikkate alınarak **keşifsel** yorumlanır. Bu sonuç çeviri sadakatinin insan değerlendirmeli kanıtı, genel Türkçe modeller için üstünlük veya eğitimsel nedensellik değildir.
+
+**Tam P1 yeniden üretilebilirlik göstergesi:** Önceki İngilizce Test-UQ skorları altı ondalıkta uyuşuyor; Windows'un `all_within_1e-8` alanını `-8` olarak basması PowerShell sözdizimi kaynaklı olduğundan **1e-8 sayısal kabulü henüz ayrıca doğrulanmadı**. Yeni salt-okunur [`audit_t4_results.py`](../audit_t4_results.py) bu kararı, 36 karışıklık matrisini, dört sınıfın destek ve F1 değerlerini, B1/B2/B3 sürüm farklarını ve eşlenik soru-kümesi güven aralıklarını aritmetik olarak doğrulamak için geliştirilmiştir. GitHub CI sentetik testleri geçti; araştırmacının **gerçek yerel T4 metrik dosyasıyla bu kontrolü çalıştırması bekleniyor**. Bu kontrol hiçbir öğrenci metnini veya tahmin satırını yayımlamaz.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
@@ -145,4 +161,4 @@ Araştırmacının Windows makinesinde **66/66 yazılım testi PASS**, her iki a
 3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
 4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki teknik görev:** T4'ün önceden kilitlenen çevrimdışı B0–B3 EN / TR v0.2 / TR v0.2.1 sözlüksel proxy deneyini Windows'ta çalıştırmak; Test-UQ Macro-F1, sınıf F1, Δ(B2−B1) ve İngilizce soru bazlı eşleşmiş %95 bootstrap güven aralıklarını incelemek. T3-HUMAN `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
+**Sonraki teknik görev:** Mevcut `results/t4_proxy_v021/t4_proxy_results.json` ve orijinal P1 sonuçlarını salt-okunur T4 metrik denetiminden geçirerek dört sınıf için precision/recall/F1 ve eşlenik B0–B3 sürüm farklarının güven aralıklarını bilimsel ek tabloya aktarmak. Yeni model seçimi, çeviri düzeltmesi veya Test-UQ üzerinde ek tuning yapılmayacak. T3-HUMAN `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
