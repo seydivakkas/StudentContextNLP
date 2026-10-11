@@ -29,7 +29,7 @@ def fake_reports(tmp_path):
             for model in CONDITIONS:
                 values[model] = {
                     "n_rows": sum(ns), "n_english_question_groups": 15,
-                    "confusion_matrix": cm,
+                    "confusion_matrix": [list(row) for row in cm],
                     "per_class": {
                         label: dict(derived["per_class"][label]) for label in LABELS},
                     **{key: derived[key] for key in (
@@ -121,7 +121,7 @@ def test_false_p1_1e8_flag_rejected(tmp_path):
     t4, prior, report, _ = fake_reports(tmp_path)
     report["english_baseline_reproduction"]["all_within_1e-8"] = False
     t4.write_text(json.dumps(report), encoding="utf-8")
-    with pytest.raises(RuntimeError, match="P1.*flag"):
+    with pytest.raises(RuntimeError, match="flag is not True"):
         audit(t4, prior, tmp_path / "reports" / "metric_audit")
 
 
