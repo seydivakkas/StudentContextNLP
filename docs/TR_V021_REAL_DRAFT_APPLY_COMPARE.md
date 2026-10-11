@@ -89,3 +89,20 @@
 **Korunan özel artefaktlar:** `reports/tr_patch_plan_v021_ai_draft/`, `data/tr_v0_2_1/`, `reports/tr_compare_v021/`, `data/tr_v0_2/`. Yeniden üretilebilir QA için `comparison_manifest.json`, `rule_delta.csv`, `concept_delta.csv` dosyaları kendi bilgisayarında tutulur; satır metinleri GitHub'a gönderilmez.
 
 **Sıradaki analitik kapı:** Test-UQ soru kümelerine duyarlı İngilizce/Türkçe karşılaştırmalı proxy modellerini çalıştırmadan önce v0.2↔v0.2.1 etiket/sınıf frekansı, değişen alan dağılımı, tekrarlanan soru/referans kaynaklı etki ve kural uyarılarının sınıflara göre değişimlerini ayrı raporla. Veri kümesine veya İngilizce P1 baseline dosyalarına yeni müdahale yapma.
+
+## T3-AUTO v0.2.1 — T4 öncesi alan/etiket/öncelik geçiş denetimi
+
+Karşılaştırmalı QA PASS sonrası ayrı bir **salt-okunur**, çevrimdışı preflight aracı eklendi: [`audit_v021_effects.py`](../audit_v021_effects.py). `data/tr_v0_2`, `data/tr_v0_2_1` ve `reports/tr_compare_v021` üstündeki manifest SHA-256'larını denetleyerek orijinal ID, İngilizce kaynak metin ve aktarılmış etiketlerin eşleştiğini yeniden doğrular.
+
+```powershell
+.\.venv\Scripts\python.exe audit_v021_effects.py --old-dir data/tr_v0_2 --new-dir data/tr_v0_2_1 --comparison reports/tr_compare_v021 --out reports/tr_impact_v021
+```
+
+**Raporlar (yalnız toplulaştırılmış, öğrenci metni veya satır kimliği yok):**
+- `row_priority_transitions.csv`: her split için 3×3 HIGH/MEDIUM/UNFLAGGED eski→yeni satır geçişleri ve değişen satır sayısı
+- `field_changes_by_split.csv`: soru, referans cevap, öğrenci yanıtı alanlarındaki değişim sayıları
+- `label_edit_counts.csv`: orijinal sınıfa göre sabit toplam ve yalnız düzenlenen satır adedi (orijinal beşli sınıflar kaybolmaz)
+- `impact_manifest.json`: SHA-256, tüm sayıların önceki karşılaştırmayla eşleşmesi ve değişmez veri güvencesi
+- `impact_summary.md`: anonim toplu özet
+
+Bu kapı **öncelik değişiminin bilimsel doğruluğunu kanıtlamaz**. Aynı kayıttaki bir HIGH işareti silinip bir MEDIUM işareti kalabilir; bu nedenle birebir satır geçişi bilgisi olmadan önceki özetlerden neden analizi yapılamaz. Ayrıca bir kaynağın yanlış öğrenci açıklamasının düzeltilmesi bilimsel hata üreteceğinden, testlerde `human_validated=false` ve `projected_labels_are_gold=false` statüsü korunur. **T4 model eğitimi bu ön denetimden ayrıdır; burada hiçbir yeni model eğitilmiyor.**
