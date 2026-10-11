@@ -1,6 +1,6 @@
 # SciEntsBank-TR v0.2.1 — Kaynak Kanıtına Kilitli Çeviri Düzeltme Katmanı
 
-**Durum (11 Ekim 2026):** Bu bir **geliştirme/açıklanabilir öneri altyapısıdır**. 10.804 kayıtlık özgün Türkçe aday veri değişmedi. Henüz hiçbir gerçek düzeltme etkinleştirilmedi ve **v0.2.1 düzeltilmiş veri kümesi henüz üretilmedi**.
+**Durum (11 Ekim 2026):** Gerçek Windows çalıştırmasında T3-AUTO v0.5 patch planı **PASS**: 58/58 yazılım testi, 39 uygun P1/P2 tekrar kümesi, mükerrer kavram eşleşmeleri tekilleştirilerek **37 boş düzeltme adayı**. Hepsinin kararı `PENDING`; etkinleştirilmiş düzeltme **0**. Özgün 10.804 satırlık çeviri verisi değişmedi ve **v0.2.1 düzeltilmiş veri kümesi henüz üretilmedi**.
 
 ## Gerekçe ve gerçek kanıt
 
@@ -53,4 +53,4 @@ Kaynak öğrencinin özgün kavramsal yanlışlığını "doğru bilgi"ye dönü
 
 ## Sonraki gerçek veri kapısı
 
-Önce **T3-AUTO v0.5 PATCH-PLAN** çalıştırılıp aday sayısı ve seçilen en etkili kök nedenler doğrulanacak. Ardından gerçek örneklerin tam EN/TR cümle çiftleri üzerinde ayrı bilimsel açıklama ve öneriler hazırlanacak. Şablondaki boş alanlar doldurulmadan v0.2.1 gerçek veri sürümü ilan edilmeyecek.
+**T3-AUTO v0.5 PATCH-PLAN tamamlandı:** gerçek Windows sonucu 39 uygun tekrarlı kümeden 37 tekil, tamamı boş/PENDING aday; 58 test PASS. Sonraki aşamada kullanıcı yalnız yerel `patch_candidates.csv` ve `patch_plan_manifest.json` dosyalarını inceleme için paylaşacak. Gerçek İngilizce–Türkçe cümleler kaynak anlamına göre tek tek değerlendirilecek; açık düzeltme önerileri `AI_DRAFT` olarak kaydedilecek. Semantik olarak belirsiz olanlar `PENDING` veya `SKIP` kalacak. Boş alanlar doldurulmadan v0.2.1 düzeltilmiş veri sürümü oluşturulmayacak.
