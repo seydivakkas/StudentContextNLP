@@ -112,6 +112,7 @@ def prepare(priority_dir: Path, out: Path, limit: int = 100, min_rows: int = 2):
             "source_priority_clusters_sha256": pinned,
             "candidate_file_sha256": file_sha(candidate_file),
             "candidate_count": len(forms),
+            "selected_cluster_ids": [r["cluster_id"] for r in forms],
             "eligible_repeated_p1_p2_clusters": len(candidates),
             "duplicate_concept_pairs_skipped": duplicate_concept_pairs_skipped,
             "limit": limit, "min_rows": min_rows,
