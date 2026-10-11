@@ -124,6 +124,14 @@ Yeni çevrimdışı kod (`import_ai_draft_patch.py`, `compare_translation_versio
 
 **Gerçek 10.804 satırlık v0.2.1 uygulaması ve karşılaştırmalı QA, araştırmacının Windows bilgisayarında 11 Ekim 2026'da çalıştırıldı; teknik kapı PASS.** 64/64 yazılım regresyon testi, AI_DRAFT SHA ve tüm orijinal kaynakların SHA bütünlüğü PASS. 34 tam eşleşme önerisi yeni sürümde uygulandı, 3 belirsiz aday bekletildi; 1.604 farklı kaydın 1.748 Türkçe alan örneği değişti. Toplam heuristik kural tetiklenmesi **7.412→4.926** (−2.486; −%33,54), yeni HIGH kural regresyonu **0**. Bu, çeviri semantiğinin doğruluğunun bağımsız kabulü değildir. **Orijinal İngilizce kaynak/etiketler ve eski v0.2 aday veri değişmedi; `UNVERIFIED_TRANSFER` korunur.** Teknik sınırlar ve splitler: [gerçek v0.2.1 karşılaştırma kabulü](../docs/TR_V021_REAL_DRAFT_APPLY_COMPARE.md).
 
+### T3-AUTO v0.2.1 etki denetimi ve T4 sözlüksel proxy deney protokolü (11 Ekim 2026)
+
+Araştırmacının Windows makinesinde **66/66 yazılım testi PASS**, her iki aday sürümün 10.804 kaydı ve SHA-256 kaynak bütünlüğüyle `audit_v021_effects.py` gerçek veri analizini tamamladı. **1.604 farklı kayıt** içinde toplam **1.748 Türkçe metin alanı** değişmiştir: **1.366 soru**, **376 referans cevap**, yalnız **6 öğrenci açıklaması** (train 5, Test-UA 1, Test-UQ 0, Test-UD 0). Test-UQ'da değişiklik yalnız **40 soru alanında**, diğer iki alanda **0**.
+
+Özgün QA HIGH durumundaki 1.604 değişen kaydın gerçek satır-bazlı geçişleri: **610 HIGH→MEDIUM**, **784 HIGH→UNFLAGGED**, **210 HIGH→HIGH**. Yeni HIGH'a geçiş yoktur; bu gözlemler heuristik QA kuralının davranışıdır, çevirinin otomatik bilimsel doğruluğu değildir. Test-UQ yeni soru çevirilerinin özgün kaynak sınıflarına dağılımı: doğru 31, çelişkili 5, kısmen doğru 2, ilgisiz 2; bunlar Türkçe gold etiket değildir.
+
+**T4 için önceden sabitlenen karşılaştırmalı araştırma tasarımı:** [TR_T4_PROXY_LEXICAL_PROTOCOL.md](../docs/TR_T4_PROXY_LEXICAL_PROTOCOL.md). Aynı gerçek SciEntsBank kaynak kayıtları/özgün sınıf eşlemesi üzerinden İngilizce, Türkçe v0.2 ve AI_DRAFT Türkçe v0.2.1 varyantlarında B0 çoğunluk, B1 öğrenci, B2 öğrenci+soru, B3 soru sözlüksel TF-IDF+LR modelleri çalıştırılacaktır. Soru grupları ve eğitim-validation kümesi **özgün İngilizce soruyla** sabitlenmiştir; Test-UQ 15 İngilizce soru kümesidir. Türkçe v0.2.1 için `C` v0.2'de yalnız train validation ile seçilen sabit değerlerden aktarılacak, test skoruna göre yeniden hiperparametre ayarlanmayacaktır. Birincil `MacroF1(B2)-MacroF1(B1)` ve TR-v0.2.1 eksi TR-v0.2 farkının farkı, 1.000 eşlenik soru-kümesi bootstrap yinelemesiyle raporlanacaktır. **Gerçek T4 model skoru henüz yoktur; yazılım sentetik testleri ayrı kabul edilecektir.** Özgün İngilizce P1 skorları kullanıcı tarafından bildirilen önceki ölçümlerle tekrar karşılaştırılacak ve hiçbir P1 modeli/verisi üzerine yazılmayacaktır.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
@@ -137,4 +145,4 @@ Yeni çevrimdışı kod (`import_ai_draft_patch.py`, `compare_translation_versio
 3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
 4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki teknik görev:** v0.2 ve v0.2.1 gerçek kayıtlarında değişiklik/kural dağılımı analizi; ardından aynı veri bölümleri ve sabit sınıf eşlemesiyle Test-UQ üzerinde İngilizce/Türkçe B0–B3 karşılaştırmalı *exploratory projected-label proxy* deneyleri. Q-gruplu güven aralığı ve veri sızıntısı denetimleri zorunlu. T3-HUMAN `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
+**Sonraki teknik görev:** T4'ün önceden kilitlenen çevrimdışı B0–B3 EN / TR v0.2 / TR v0.2.1 sözlüksel proxy deneyini Windows'ta çalıştırmak; Test-UQ Macro-F1, sınıf F1, Δ(B2−B1) ve İngilizce soru bazlı eşleşmiş %95 bootstrap güven aralıklarını incelemek. T3-HUMAN `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
