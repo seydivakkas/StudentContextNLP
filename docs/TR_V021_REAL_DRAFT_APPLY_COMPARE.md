@@ -4,6 +4,8 @@
 
 **Eski dosyaları silme veya GitHub'a yükleme:** `data/raw`, `data/tr_v0_2`, `reports/tr_auto_full_v01`, `reports/tr_auto_priority_v01`, `reports/tr_patch_plan_v021` ve bağımsız A/B formları hiçbir aşamada silinmez/üzerine yazılmaz. Kaynak öğrenci metinleri/CSV'ler `data/` ve `reports/` altındadır, `.gitignore` korumasıyla **yalnız yerel** kalır. GitHub'a yalnız kaynak kodu, sentetik testler, yöntem ve anonim toplam istatistik eklenir.
 
+**Bilinen AI_DRAFT ZIP SHA-256:** `a9ecd6ce70eeb4d5d2947a778ac0fe2f233533598bb547e2d1a926e81466670c`. İçerideki aday CSV: `3cb18fc1fddf59f73d166a47f92bc7e5668bf07387ee6d1e1e647679470aef23`. Özgün PENDING CSV: `6325d1cc9934d5e4595f9f3850e74e6f7e0f93a23b6c0a32314657bc3f327017`. Bu özetler gerçek kullanıcı tarafından yüklenen kapalı paket için doğrulanmıştır; ham metin hiçbir GitHub dosyasına konmamıştır.
+
 ## Girdi
 
 - Önceden bu sohbet içinde üretilmiş `StudentContextNLP_v021_AI_DRAFT_37.zip`. **İndirip Windows bilgisayarında sakla**. ZIP üç dosya içerir: `patch_candidates_AI_DRAFT.csv`, `AI_DRAFT_manifest.json`, `AI_DRAFT_37_INCELEME_RAPORU.md`.
