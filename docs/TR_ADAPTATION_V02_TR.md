@@ -70,7 +70,17 @@ Uyarılar varsa ancak yazılı P0 incelemesi sonrası `--allow-audit-warnings` k
 .\.venv\Scripts\python.exe sample_translation_review.py --data-dir data/tr_v0_2 --out reports/tr_review --n 240
 ```
 
-İki bağımsız değerlendirici `review_A.csv` ve `review_B.csv` dosyalarında `yes/no/uncertain` alanlarını tamamlamalı. Anlamı, öğrencinin **özgün bilimsel hatasının korunmasını**, etikete uygunluğu ve düzeltme gereğini ayrı işaretlemeli. Aynı kayıtlar iki uzman tarafından incelenir.
+İlk olarak **etiket körü Aşama 1** dosyalarını oluştur:
+
+```powershell
+.\\.venv\\Scripts\\python.exe prepare_blinded_reviews.py --review-dir reports/tr_review
+```
+
+Değerlendirici A ve B, yalnız `reports/tr_review/blind_stage1/review_A_blind.csv` ve `review_B_blind.csv` dosyalarını ayrı ayrı doldurmalıdır (`meaning_preserved`, `error_preserved`, `notes`). Bu formlar özgün `class4` etiketini ve otomatik `quality_flags` alanını içermez. **Orijinal `review_A.csv` ve `review_B.csv` dosyaları silinmez ve otomatik doldurulmaz.**
+
+Her iki değerlendiricinin ilk aşama yorumları tamamlandıktan sonra orijinal etiketler gösterilerek Aşama 2'de `label_still_applicable` ve `correction_needed` incelenir. Bağımsız iki aşama kaydı doğrulanmış biçimde birleştirilmeden ve tüm alanlar doldurulmadan aşağıdaki hesaplama çalıştırılmamalıdır.
+
+**Bağlayıcı insan değerlendirme protokolü:** [TR_REVIEW_PROTOCOL_T3.md](TR_REVIEW_PROTOCOL_T3.md).
 
 ```powershell
 .\.venv\Scripts\python.exe evaluate_translation_reviews.py --review-dir reports/tr_review
@@ -86,14 +96,22 @@ Uyarılar varsa ancak yazılı P0 incelemesi sonrası `--allow-audit-warnings` k
 - `Δ_EN = F1(B2)-F1(B1)` ile `Δ_TR` karşılaştırılabilir; bunlar çeviri ve veri farklılıklarının birleşik etkisidir, dilin kanıtlanmış nedensel etkisi değildir.
 - Öğretici etki, gerçek Türkçe öğrencilerde genelleme, veri kümesinin uzman-altın-standart kalitesi veya yarışma başarısı **iddia edilmez**.
 
+## Gerçek Windows ilerlemesi (10–11 Ekim 2026)
+
+- P0 İngilizce kaynak: **PASS_WITH_WARNINGS**, uyarılar araştırmacı tarafından koşullu olarak kabul edildi; ham veri/etiketler değişmedi.
+- P1 B0–B3 gerçek Test-UQ Macro-F1: B1=0.295023, B2=0.240599, Δ=−0.054424; ayrıntı [araştırma kaydında](../paper/RESEARCH_DRAFT_TR.md).
+- T1 yerel Argos en→tr model SHA-256 kaydı ve 8/8 smoke kontrolü: **PASS**.
+- T2 dört split 10.804/10.804 aday çeviri, özgün id ve etiketler korunuyor: **PASS**; 2.823 aday kayıtta sezgisel kalite bayrakları var (kanıtlanmış hata sayısı değil).
+- T3.0 240 örnek, 2 boş inceleme formu; her splitten 60, her dört sınıftan 60, 73 otomatik uyarı taşıyan örnek: **PASS**. İnsan kalite incelemesi bekliyor.
+
 ## Kabul kapıları
 
 | Kapı | PASS koşulu | Durum |
 |---|---|---|
-| T0 | v0.1 CI bozulmadı, sentetik v0.2 testleri geçti | Kod aşamasında doğrulanır |
-| T1 | Model kurulumu, doğrudan EN→TR ve SHA-256 kanıtı | Gerçek yerel model bekliyor |
-| T2 | 4 gerçek splitin tamamının çevrimi, manifest ve 1:1 row count | Gerçek veri bekliyor |
-| T3 | 240 örnekte 2 bağımsız değerlendirici, kappa ve hata analizi | Bekliyor |
+| T0 | v0.1 CI bozulmadı, sentetik v0.2 testleri geçti | Windows 28/28 PASS; yeni kör inceleme testleri ayrıca CI'ye eklendi |
+| T1 | Model kurulumu, doğrudan EN→TR ve SHA-256 kanıtı | PASS (yerel Windows çıktısı) |
+| T2 | 4 gerçek splitin tamamının çevrimi, manifest ve 1:1 row count | PASS (10.804/10.804, yerel Windows çıktısı) |
+| T3 | 240 örnekte 2 bağımsız değerlendirici, kappa ve hata analizi | Örneklem PASS, kör insan incelemesi bekliyor |
 | T4 | Etiketi korunan örneklerle bilimsel Türkçe baseline ve diller arası analizi | Bekliyor |
 
 **TEKNOFEST 2242:** Bu yalnızca yeni yarışma çağrısına uygun geliştirilecek araştırma modülüdür, mevcut bir yarışma kabulü veya bilimsel sonuç değildir.
