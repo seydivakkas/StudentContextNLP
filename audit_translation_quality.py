@@ -44,6 +44,11 @@ BAD_PAIRS = (
     ('CHEMICAL_SOLID_AS_STURDY', r'\bsolids?\b', r'\bsağlam\b'),
     ('FOGGED_GLASS_AS_SHINY', r'\bfogg?ed\s+up\b', r'\bparlak\b'),
     ('NO_SLOPE_AS_NONSENSE', r'\bno\s+slope\b', r'\bgöçücü\b'),
+    ('STORE_FOOD_AS_SHOP', r'\bstore\s+food\b', r'\bmağaza\b'),
+    ('SKINNY_AS_SKIN', r'\bskinny\b', r'\bcilt\b'),
+    ('EVAPORATE_AS_DISCHARGE', r'\bevaporat\w*\b', r'\btahliye\b'),
+    ('ERODE_AS_ENGLISH_REMNANT', r'\berod\w*\b', r'\berod\w*\b'),
+    ('JUICE_AS_WATER', r'\bjuice\b', r'\bsu\s+var\b'),
 )
 LEFTOVER = re.compile(r'\b(?:flaky|pebbles|fulcrum|slope|scratch|calcite|salt|bulb)\b', re.I)
 NUM = re.compile(r'(?<!\w)\d+(?:[.,]\d+)?%?(?!\w)')
