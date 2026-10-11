@@ -20,6 +20,7 @@ from pathlib import Path
 import pandas as pd
 
 from audit_dataset import SPLITS, EXPECTED, read_split
+from download_data import REVISION
 from audit_translation_quality import analyze_pair
 from tr_adaptation.pipeline import OUT_STEM, TEXT_COLUMNS
 
@@ -170,7 +171,11 @@ def run(data_dir: Path, source_dir: Path, sample: Path, sample_summary: Path,
     if (source_dir / "file_manifest.json").exists():
         # Original downloader revision and hashes remain pinned by P0.
         orig_manifest = json.loads((source_dir / "file_manifest.json").read_text(encoding="utf-8"))
-        require(bool(orig_manifest.get("revision")), "Missing source dataset revision")
+        require(orig_manifest.get("revision") == REVISION,
+                "Source dataset pinned revision differs from official downloader")
+        original_files = {item["filename"]: item["sha256"]
+                          for item in orig_manifest.get("files", [])}
+        require(len(original_files) == 4, "Original source file manifest is incomplete")
     else:
         raise RuntimeError("Original source file_manifest.json required")
 
@@ -183,8 +188,9 @@ def run(data_dir: Path, source_dir: Path, sample: Path, sample_summary: Path,
         require(manifest["splits"][split]["source_rows"] == len(source) and
                 manifest["splits"][split]["translated_rows"] == len(source),
                 f"Split {split} is not 1:1")
-        require(sha256(source_path) == manifest["source_file_sha256"][split],
-                f"Source hash changed: {split}")
+        require(sha256(source_path) == manifest["source_file_sha256"][split]
+                and sha256(source_path) == original_files.get(source_path.name),
+                f"Source hash changed or not listed in pinned source manifest: {split}")
         require(sha256(translated_path) == manifest["splits"][split]["output_sha256"],
                 f"Translation hash changed: {split}")
     require(manifest["model_key"] == json.loads(
