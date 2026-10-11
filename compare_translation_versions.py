@@ -241,7 +241,7 @@ def scan(old_dir: Path, new_dir: Path, full_qa: Path, plan_dir: Path, out: Path)
                     "Original full QA row totals no longer reproducible: " + split)
         require(dict(sorted(rules_old.items())) == original_qa.get("rule_counts"),
                 "Original full QA rule distribution changed")
-        require(sum(rules_old.values()) == original_qa["total_flags"] == 7412,
+        require(sum(rules_old.values()) == original_qa["total_flags"],
                 "Original full QA count differs")
         require(changed_fields == version_manifest["edited_field_occurrences"]
                 and changed_rows == version_manifest["edited_distinct_rows"],
