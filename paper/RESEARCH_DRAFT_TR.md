@@ -112,6 +112,10 @@ Araştırmacının Windows çıktısında **53/53 regresyon testi PASS**, tam 10
 
 **v0.2.1 hazırlığı (kod tamamlandı, gerçek veri henüz oluşturulmadı):** [Sürümleme ve düzeltme kanıt protokolü](../docs/TR_PATCH_LAYER_V021.md) geliştirildi. `prepare_translation_patch_plan.py` P1/P2 tekrar eden kaynak metin eşleşmeleri için **boş düzeltme şablonu** üretir; `apply_translation_patch_plan.py` yalnız `APPLY_EXPLORATORY` olarak açıkça belirlenmiş, tam metin + gerekçeli, SHA kanıtı ile eşleşen önerileri *yeni* `data/tr_v0_2_1/` aday sürümünde uygulayabilir. AI önerileri `AI_DRAFT` statüsünde kalır, gold veya iki insanın değerlendirmesi değildir. Henüz gerçek v0.2.1 metni değiştirilmedi; P1 İngilizce baseline etkilenmedi.
 
+### T3-AUTO v0.5 — Gerçek Windows kök neden patch-plan kabulü (11 Ekim 2026)
+
+Araştırmacının Windows ortamında **58/58 regresyon testi PASS**, `reports/tr_patch_plan_v021` içinde **39 uygun tekrarlanan P1/P2 kümesinden 37 tekil düzeltme plan adayı** üretildi. `milliliter` kavramında 7, `solid` 10, `bulb` 7, `evaporate` 4, `fogged_glass` 2, `plant_pot` 2 ve diğer kavramlarda adaylar bulunuyor. En büyük tekil plan adayı kaynak soru çevirisi 100 kaydı ilgilendiriyor. **Bu adaylar doğrulanmış çeviri hataları değildir**; `decision=PENDING` ve düzeltme metni boş, uygulanan değişiklik 0. Hiçbir insan uzman değerlendirmesi ya da Türkçe gold etiketi üretilmedi. [v0.2.1 öneri/uygulama protokolü](../docs/TR_PATCH_LAYER_V021.md).
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
@@ -125,4 +129,4 @@ Araştırmacının Windows çıktısında **53/53 regresyon testi PASS**, tam 10
 3. SciEntsBank dataset — https://huggingface.co/datasets/nkazi/SciEntsBank
 4. TEKNOFEST 2242 — https://www.teknofest.org/tr/yarismalar/universite-ogrencileri-arastirma-proje-yarismalari/
 
-**Sonraki teknik görev:** Yerel Türkçe çeviri kalite örneklemesi ve bağımsız insan değerlendirmesi (T3).
+**Sonraki teknik görev:** 37 adayın gerçek İngilizce–Türkçe tam cümlelerini kanıtla değerlendirmek; açık semantik düzeltmeleri `AI_DRAFT` olarak gerekçelendirmek, belirsizleri `PENDING/SKIP` bırakmak. T3-HUMAN şu anda `NOT_PERFORMED`; Türkçe gold etiketi iddia edilmez.
