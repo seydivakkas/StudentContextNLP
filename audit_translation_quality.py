@@ -105,6 +105,21 @@ def analyze_pair(item_key: str, field: str, source: str, target: str) -> list[di
     if EN_LESS.search(en) and not EN_MORE.search(en) and TR_MORE.search(tr) and not TR_LESS.search(tr):
         add('MEDIUM', 'COMPARATIVE_DIRECTION', 'Azlık/yavaşlık karşılaştırması Türkçede çokluk/hız yönüne kaymış olabilir.')
 
+    # Opposite science concept: positive saturation must not become "unsaturated".
+    # Do not flag when the English source explicitly negates saturation.
+    if (re.search(r'\bsaturated\b', en, re.I)
+            and not re.search(r"\b(?:not|isn.t|wasn.t|never|non)\b.{0,25}\bsaturated\b", en, re.I)
+            and re.search(r'\bdoymamış\b|\bdoymamış\w*\b', tr, re.I)):
+        add('HIGH', 'SATURATION_POLARITY_REVERSED',
+            '"Saturated" (doymuş) kavramı hedefte "doymamış" olmuş olabilir; fiziksel anlam tersine dönmüş.')
+
+    # Millilitres becoming bare litres is an order-of-magnitude unit risk.
+    # Only a candidate; do not automatically rewrite numerical units.
+    if re.search(r'\bmillilit(?:er|re)s?\b', en, re.I) and not re.search(r'\bliters?\b|\blitres?\b', en, re.I):
+        if re.search(r'\b\d+\s+litre\w*\b', tr, re.I):
+            add('HIGH', 'MILLILITER_AS_LITER',
+                'Kaynak mililitre birimi Türkçede litreye dönüşmüş olabilir; büyüklük 1000 kat değişebilir.')
+
     for term, en_pat, tr_pat in GLOSSARY:
         if term == 'nail_in_magnets' and not _contains(r'\bmagnet\w*\b|\bmetal\b|\biron\b', en):
             continue
