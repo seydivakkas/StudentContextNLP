@@ -66,7 +66,7 @@ Araştırmacının Windows bilgisayarında, yerel Argos EN→TR modeliyle dört 
 
 Çeviri statüsü **`FULL_CANDIDATE / UNVERIFIED_MACHINE_TRANSLATION`** ve aktarılan etiketler **`UNVERIFIED_TRANSFER`** olarak korundu. Uyarılar anlamsal hata kanıtı veya çevirinin güvenilirlik oranı değildir. Ayrıntılı üretim ve bilimsel sınır raporu: [T2 çeviri kaydı](T2_REAL_TR_TRANSLATION_2026-10-10.md).
 
-**T3 bekliyor:** 240 sınıf/split kapsamlı örnek, iki bağımsız değerlendirici, özgün bilimsel hata ve etiket korunumu, anlaşmazlık çözümü. Bu kapı tamamlanmadan Türkçe altın standart ya da bilimsel TR Macro-F1 ilan edilmeyecek.
+**T3.0 (11 Ekim 2026) tamamlandı:** Araştırmacı `seed=20261010` ile **240 benzersiz satırlık** örneklem üretti, her bir splitten 60 ve her türetilmiş sınıftan 60 örnek alındı. Örneklemde **73 otomatik kalite bayraklı** aday bulunmaktadır. `review_A.csv`, `review_B.csv`, `review_manifest.json` yerel makinede oluşturuldu; iki bağımsız insanın inceleme yanıtları henüz yoktur. Sınıfa/kalite bayrağına kör aşama-1 formları üretmek için `prepare_blinded_reviews.py` ve [iki aşamalı protokol](../docs/TR_REVIEW_PROTOCOL_T3.md) eklendi. T3 insan doğrulaması bitmeden Türkçe altın standart veya bilimsel Türkçe Macro-F1 ilan edilmez.
 
 ## Araştırma etiği ve yeniden üretilebilirlik
 
