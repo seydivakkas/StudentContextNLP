@@ -92,6 +92,12 @@ Tespit edilen somut hata türlerine örnekler: `calcite` → `analiz`, `bulb` �
 
 Ayrı `propose_translation_corrections.py` aracı yalnız **etiketsiz, geri alınabilir kavram düzeltme önerileri** oluşturur; kaynak veriye, makine çevirisine veya insan inceleme formuna yazmaz. **Hiçbir satır otomatik düzeltilmedi, hiçbir insan değerlendirici/altın standart kararı üretilmedi.** Güncel çıktılar kullanıcının kendi Windows bilgisayarında tekrar çalıştırılmayı bekliyor. Ayrıntılar: [T3-AUTO protokolü](../docs/TR_AUTOMATED_QA_T3.md).
 
+### T3-AUTO v0.3 — Kaynak kavrama göre gruplanmış örnek ve tam veri tarama motoru
+
+Asistan, kullanıcı tarafından yüklenen **aynı 240 kör İngilizce–Türkçe çifti** üzerinde v0.2 kurallarını yeniden çalıştırıp kaynak kavramı bazında sınıflandırdı. Olumsuzluk: **56 tetiklenme / 54 ayrı kayıt / 37 ayrı alan–kaynak–hedef çift**; İngilizce kalan terimler: **41 / 23 / 22**; `bulb`: **21 / 11 / 8**; sayılar: **17 / 17 / 10**; `solid`: **11 / 10 / 7**; `calcite`: **10 / 3 / 7**; mililitre/litre: **8 / 8 / 6**. Bunlar insan tarafından doğrulanmış hata adedi veya gerçek çeviri hata oranı değildir.
+
+Yeni `audit_translation_corpus.py` modülü tüm **10.804** kayıt için orijinal Parquet/SHA ve çeviri manifestlerini denetleyip aynı kontrolleri soru, referans ve öğrenci açıklamasında çalıştırır; kaynak kavramı/grup/tekrar sayımlarını birbirinden ayırır. Tam veri çalışması araştırmacının Windows sisteminde **henüz yapılmadı**. Ayrıntılı yöntem ve kullanım: [T3 tam korpus QA](../docs/TR_FULL_CORPUS_QA_T3.md). İlk sentetik tam-kapsam regresyon testleri GitHub CI'de PASS; bu bir gerçek veri doğrulaması değildir.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
