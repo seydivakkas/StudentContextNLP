@@ -152,7 +152,8 @@ def _compare_sample(found: dict, previous: dict):
 def run(data_dir: Path, source_dir: Path, sample: Path, sample_summary: Path,
         out: Path, blind_manifest: Path | None = None) -> dict:
     data_dir, source_dir, out = data_dir.resolve(), source_dir.resolve(), out.resolve()
-    require(out != data_dir and out != source_dir, "Output cannot overwrite source directories")
+    require(not out.is_relative_to(data_dir) and not out.is_relative_to(source_dir),
+            "Output cannot be within original data/translation directories")
     stage = out.with_name(out.name + ".part")
     require(not out.exists() and not stage.exists(),
             "Output or staging directory exists; use a new --out")
@@ -257,11 +258,11 @@ def run(data_dir: Path, source_dir: Path, sample: Path, sample_summary: Path,
                             all_concepts[concept] += 1
                             by_concept[concept].record(f)
                             by_concept_split[(concept, split)].record(f)
-                            pair = (concept, pair_digest(f))
+                            pair = (concept, f["rule"], pair_digest(f))
                             if pair not in repeated:
                                 repeated[pair] = {"concept": concept,
                                                   "field": f["field"], "rule": f["rule"],
-                                                  "source_target_sha256": pair[1],
+                                                  "source_target_sha256": pair[2],
                                                   "occurrences": 0,
                                                   "source_en": f["source_en"],
                                                   "target_tr": f["target_tr"]}
@@ -350,7 +351,8 @@ def run(data_dir: Path, source_dir: Path, sample: Path, sample_summary: Path,
         ]
         (stage / "full_qa_summary.md").write_text("\n".join(summary_md), encoding="utf-8")
         report["outputs"] = {
-            f.name: sha256(f) for f in stage.iterdir() if f.is_file()
+            f.name: sha256(f) for f in stage.iterdir()
+            if f.is_file() and f.name != "full_qa_summary.json"
         }
         (stage / "full_qa_summary.json").write_text(
             json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
