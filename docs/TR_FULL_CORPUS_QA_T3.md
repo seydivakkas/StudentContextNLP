@@ -49,8 +49,18 @@ Kullanıcı tarafından yüklenen **aynı 240 EN→TR çiftinin v0.2 kurallarıy
 | `repeated_evidence.csv` | Aynı kural + metin alanı + kaynak/hedef örneğinin yinelendiği kanıtlar |
 | `full_translation_flags.csv` | Kaynak ve hedef metin, alan, kural, öncelik, soru–satır anahtarı; **yerelde tutulmalı** |
 
-**Çalışma şu an kod ve sentetik regresyon testleri aşamasındadır; gerçek tam 10.804 satırlık QA sonucu henüz alınmadı.** Tam veri taramasından önceki 240 satırlık tarama sonucu gerçek yerel örneğe dayanır. GitHub CI geçmesi yalnız yazılım davranışını doğrular, insan eliyle doğrulanmış çeviri kalitesi değildir.
+**Gerçek tam veri taraması kullanıcı Windows bilgisayarında tamamlandı (11 Ekim 2026):** 10.804/10.804 satır, 49/49 regresyon testi PASS, 1.930 HIGH + 2.278 MEDIUM inceleme adayı, 6.596 işaretlenmeyen kayıt ve 7.412 kural bulgusu. Yerel artefaktlar `reports/tr_auto_full_v01/` altındadır. [Ayrıntılı gerçek çalıştırma ve kök neden planı](../paper/T3_FULL_CORPUS_REAL_2026-10-11.md). Bu kural sonuçları insan eliyle doğrulanmış çeviri hataları değildir.
 
 ## Akademik metodoloji
 
 Bu araçlar birer **heuristic error-candidate mining** yazılımıdır; yanlış alarm ve kaçırılmış hata oranları insan ya da bağımsız doğruluk etiketi olmaksızın ölçülemez. Kullanıcının tercihine uygun olarak T3-HUMAN **NOT_PERFORMED** statüsünde kalacak; Cohen kappa uydurulmayacak. `T4` Türkçe skorları üretildiğinde orijinal veri üzerinden *projected-label exploratory proxy results* olarak nitelendirilecek. Gerçek Türkçe öğrenci genellemesi ayrıca test edilmedikçe iddia edilmeyecek.
+
+## v0.4 — Kök neden ayrıştırması (yeni kod)
+
+`prioritize_translation_issues.py` ile `reports/tr_auto_full_v01/full_translation_flags.csv` içindeki 7.412 kural kaydı, **kaynak kavram + metin alanı + İngilizce kaynak + Türkçe aday çeviri** üzerinden gruplandırılır. Tüm kaynak SHA ve sayaçlar `full_qa_summary.json` ile karşılaştırılır. `P1` fiziksel anlam/birim tersine dönüşü, `P2` belirli yanlış teknik terim, `P3` yüzeysel uyarı sıralaması bir **inceleme önceliğidir**, doğruluk olasılığı değildir. Orijinal ve çevrilmiş veri hiçbir zaman değiştirilmez.
+
+```powershell
+.\.venv\Scripts\python.exe prioritize_translation_issues.py --qa-dir reports/tr_auto_full_v01 --out reports/tr_auto_priority_v01
+```
+
+Yeni sonuçlar: `root_cause_clusters.csv` (kaynak metinleri içerir, GitHub'a yükleme), `concept_priority.csv`, `root_cause_summary.md`, `root_cause_manifest.json`. Yeni modülün gerçek veri çalıştırması henüz bekliyor.
