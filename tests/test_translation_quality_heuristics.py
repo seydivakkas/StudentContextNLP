@@ -31,6 +31,26 @@ def test_specific_scientific_false_friends():
         assert all(f["status"] == "AUTOMATIC_CANDIDATE_NOT_HUMAN_VERIFIED" for f in flags)
 
 
+def test_saturation_and_unit_reversals_get_priority():
+    cases = (
+        ("The solutions are saturated.", "Çözümler doymamış.",
+         "SATURATION_POLARITY_REVERSED"),
+        ("2 spoons in 50 milliliters equals 4 in 100 milliliters.",
+         "50 mililitrede 2 kaşık, 100 litrede 4 kaşık eşittir.",
+         "MILLILITER_AS_LITER"),
+    )
+    for en, tr, code in cases:
+        flags = analyze_pair("x", "question", en, tr)
+        assert code in {f["rule"] for f in flags}
+        assert next(f["priority"] for f in flags if f["rule"] == code) == "HIGH"
+
+
+def test_explicitly_negated_saturation_not_false_positive():
+    flags = analyze_pair("x", "student_answer",
+                         "The solution is not saturated.", "Çözelti doymamıştır.")
+    assert "SATURATION_POLARITY_REVERSED" not in {f["rule"] for f in flags}
+
+
 def test_obviously_faithful_translation_has_no_surface_flags():
     assert analyze_pair("z", "student_answer", "The water is hot.", "Su sıcaktır.") == []
 
