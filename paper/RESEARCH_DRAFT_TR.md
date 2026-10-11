@@ -68,6 +68,24 @@ Araştırmacının Windows bilgisayarında, yerel Argos EN→TR modeliyle dört 
 
 **T3.0 (11 Ekim 2026) tamamlandı:** Araştırmacı `seed=20261010` ile **240 benzersiz satırlık** örneklem üretti, her bir splitten 60 ve her türetilmiş sınıftan 60 örnek alındı. Örneklemde **73 otomatik kalite bayraklı** aday bulunmaktadır. `review_A.csv`, `review_B.csv`, `review_manifest.json` yerel makinede oluşturuldu; iki bağımsız insanın inceleme yanıtları henüz yoktur. Sınıfa/kalite bayrağına kör aşama-1 formları üretmek için `prepare_blinded_reviews.py` ve [iki aşamalı protokol](../docs/TR_REVIEW_PROTOCOL_T3.md) eklendi. T3 insan doğrulaması bitmeden Türkçe altın standart veya bilimsel Türkçe Macro-F1 ilan edilmez.
 
+## T3-AUTO — İnsan değerlendirmesi olmadan yerel çeviri hata ön taraması (11 Ekim 2026)
+
+**Protokol güncellemesi:** Araştırmacı şu aşamada gerçek iki bağımsız insanın değerlendirmesini istemiyor; bu nedenle **T3-HUMAN = NOT_PERFORMED**. Bunun yerine İngilizce–Türkçe kaynak/aday çiftleri için asistan destekli niteliksel inceleme ve tamamen çevrimdışı deterministik kontrol motoru eklendi: [TR_AUTOMATED_QA_T3.md](../docs/TR_AUTOMATED_QA_T3.md). Veri/etiket kaydı ve orijinal A/B dosyaları değişmedi.
+
+Asistanın kullanıcı tarafından yüklenen 240 farklı kayıt üzerinde yerel tarama çıktısı:
+
+| Denetim | Kayıt |
+|---|---:|
+| Yüksek öncelikli şüpheli | 47 |
+| Orta öncelikli şüpheli | 61 |
+| Kuralca işaretlenmeyen | 132 |
+| **İnceleme adayı toplamı** | **108/240** |
+| Hücre düzeyi kural tetiklenmesi | 210 |
+
+Tespit edilen somut hata türlerine örnekler: `calcite` → `analiz`, `bulb` → `otobüs`, `nail` → `tırnak`, `pots` → `tencere`, `solid` → `sağlam`, `fogged up` → `parlak`, `square` → `meydan okuyorlar`. Bu örnekler kaynak metinlerle karşılaştırılarak incelendi; toplu 108 adedin tamamı doğrulanmış yanlış çeviri **değildir**. Sistem kural kaçırabilir (false negative) ve yanlış alarm verebilir (false positive). **Doğruluk oranı, iki uzman arası Cohen kappa veya Türkçe gold etiket iddia edilmiyor.**
+
+İnsan kalite doğrulaması olmadan **T4'te** elde edilecek Türkçe karşılaştırmalar yalnız *projected-label exploratory proxy experiment* şeklinde sunulabilir; bağımsız Türkçe öğrenci verisinde doğrulama olarak sunulamaz.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
