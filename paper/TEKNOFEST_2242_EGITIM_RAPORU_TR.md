@@ -9,6 +9,24 @@
 - **Yarışma statüsü:** **2026'nın 6 Nisan başvuru ve 24 Nisan rapor teslim tarihleri geçmiştir. Bu metin 2026 dönemine gönderilmiş resmî bir başvuru değildir.** Yeni çağrının koşulları ilan edildiğinde yeniden uyarlanmalıdır.
 - **Biçim notu:** 2026 TÜBİTAK 2242 rehberinin *Özet; 1. Giriş; 2. Yöntem ve Teknikler; 3. Bulgular; 4. Sonuç ve Tartışma; 5. Öneriler; 6. Kaynaklar; 7. Ekler* düzeni izlenmiştir. Markdown sayfa düzenini ve **resmî DOCX şablonunun** tipografisini tek başına sağlamaz; teslim öncesi güncel resmî şablona yerleştirilerek 2–20 sayfalık PDF teslim şartı ayrıca doğrulanmalıdır.
 
+## İÇİNDEKİLER
+
+1. GİRİŞ — amaç, özgünlük, araştırma soruları
+2. YÖNTEM VE TEKNİKLER — veri, modeller, bölme, çeviri ve kalite denetimi, istatistik, iş planı
+3. BULGULAR — İngilizce ablasyon, Türkçe QA, T4 karşılaştırması, sınıf bazlı F1
+4. SONUÇ VE TARTIŞMA — araştırma cevapları, eğitimsel sınır, özgün katkı
+5. ÖNERİLER — bağımsız dış doğrulama kapıları
+6. KAYNAKLAR
+7. EKLER VE YENİDEN ÜRETİLEBİLİRLİK
+
+**Tablolar listesi:** Tablo 1 — SciEntsBank bölümleri; Tablo 2 — B0–B3 modelleri; Tablo 3 — İngilizce Test-UQ; Tablo 4 — Türkçe QA; Tablo 5 — üç varyant Macro-F1; Tablo 6 — eşlenik sürüm farkları; Tablo 7 — B2 sınıf F1; Tablo 8 — B1 sınıf F1; Tablo 9 — bilimsel/teknik kabul kapıları.
+
+**Şekiller listesi:** Şekil 1 — metinsel araştırma işlem zinciri.
+
+**Kısaltmalar:** B0–B3 = sözlüksel başlangıç/ablasyon koşulları; CI/GA = güven aralığı; EN = İngilizce; TR = Türkçe; TF-IDF = terim sıklığı–ters belge sıklığı; LR = lojistik regresyon; QA = otomatik kalite denetimi; SHA-256 = dosya bütünlüğü özeti; P0/P1/T1–T4 = araştırma iş paketleri; Test-UQ = testte eğitimin görmediği soru kümeleri.
+
+*Bu Markdown dosyasında sayfa numaraları bulunmaz. Kapak, içindekiler ve listelerin sayfa numaraları resmî DOCX şablonundan PDF'ye son dönüşüm sırasında belirlenmelidir.*
+
 ## ÖZET
 
 Fen bilimleri eğitiminde kısa öğrenci açıklamalarının otomatik değerlendirilmesi, bir yanıtın yalnızca sözcüklerinden değil, yanıtlandığı sorunun bağlamından da etkilenebilir. Bu araştırmada soru metni eklemenin açıklama sınıflandırmasına katkısı ve İngilizce kaynak verinin Türkçeye çevrilmesi sırasında oluşan değişikliklerin sözlüksel modellere yansıması incelenmiştir. SciEntsBank veri kümesinin dört bölümündeki 10.804 kayıt kullanılmış, özgün beş sınıf tanımlı dört sınıfa dönüştürülmüştür. Çevrimdışı çalışan çoğunluk sınıfı ve TF-IDF ile lojistik regresyon temelli dört temel model karşılaştırılmıştır. Birincil değerlendirmede, eğitim bölümünde görülmeyen sorulardan oluşan 733 yanıtlık Test-UQ kullanılmıştır. İngilizcede yalnız öğrenci açıklaması modeli 0,295023, açıklama ve soru modeli 0,240599 Macro-F1 üretmiştir. İngilizceden Türkçeye yerel olarak çevrilen bütün kayıtlar kaynak kimlikleriyle korunmuş, otomatik kalite kuralları ve kanıta bağlı düzeltme önerileri uygulanmıştır. Türkçe ilk sürümde soru içeren modelin Macro-F1 değeri 0,274505, ayrı bir düzeltilmiş aday sürümde 0,285392 bulunmuştur. İkinci Türkçe sürümde 34 seçili tam-metin düzeltmesi 1.604 kaydı etkilemiş, 10.804 satırın tamamı korunmuştur. Sonuçlar dört sınıfın hata dağılımı ve soru kümelerine göre eşlenik yeniden örnekleme ile incelenmiştir. Veri bütünlüğü ve metrik aritmetiği yerel testlerle doğrulanmıştır. Bununla birlikte Türkçe etiketler İngilizce kaynaktan aktarılmıştır; bağımsız insan doğrulaması ve doğal Türkçe öğrenci yanıtları bulunmadığından sonuçlar yalnız keşifsel araştırma bulgularıdır.
@@ -102,6 +120,25 @@ Yerel Windows çalıştırmasında **76/76 yazılım regresyon testi PASS**, İn
 \`Kaynak SciEntsBank + SHA → P0 etiketsel/tekrar denetimi → B0–B3 EN P1 → yerel EN→TR v0.2 → tam QA + kavram kök nedeni → sürümlü AI_DRAFT v0.2.1 → veri etki analizi → kilitli T4 B0–B3 → salt-okunur metrik kabulü\`
 
 Geliştirme ortamı Windows/Python, scikit-learn ve çevrimdışı çeviri bileşenleridir. Kaynak ve düzeltilmiş öğrenci metinleri, satır bazlı öneriler, çeviri CSV'leri, ikili model dosyaları ve satır düzeyi tahminler **yerel bilgisayarda tutulmuştur**; kamuya açık depoda kod, sentetik test, toplu sonuç ve bilimsel sınırlama belgeleri bulunmaktadır. Ölçülmemiş CPU gecikmesi veya model maliyeti rapora eklenmemiştir.
+
+### 2.7. Tamamlanan iş-zaman çizelgesi ve açık araştırma işleri
+
+2026 yarışma rapor teslim tarihi Nisan ayında sona ermiş olduğundan aşağıdaki çizelge **gelecek bir yarışma başvurusunun gerçekleştirilmiş takvimi gibi değil, projenin gerçek araştırma kronolojisi** olarak verilmektedir.
+
+**Tablo 2A. Gerçek ilerleme kronolojisi ve ileri çalışma durumu**
+
+| İş paketi | 9 Ekim 2026 | 10 Ekim 2026 | 11 Ekim 2026 | Mevcut durum |
+|---|:---:|:---:|:---:|---|
+| C0/C1: Kod, sentetik regresyon, CI | ● | ● | ● | Güncel 76 test PASS |
+| P0: Veri dosyaları, tekrar/etiket çelişkileri |  | ● |  | PASS_WITH_WARNINGS |
+| P1: İngilizce B0–B3 Test-UQ |  | ● | ✓ yeniden kabul | PASS |
+| T1/T2: Yerel EN→TR tam aday çeviri |  | ● |  | Aday üretimi PASS |
+| T3-AUTO: Tam QA/kök neden/AI_DRAFT |  |  | ● | Yazılım PASS; insan gold yok |
+| T4: Üç varyant ve sınıf metrik QA |  |  | ● | Teknik PASS, keşifsel |
+| V2–V4: Yeni bağımsız soru/etiket/dış test |  |  |  | NOT_STARTED / BLOCKED |
+| S1/S2: Dondurulmuş anlamsal encoder gerçek sonuçları |  |  |  | RAPORLANMADI |
+
+*● = tarihte çalıştırılan iş; ✓ = yeniden üretilebilirlik doğrulaması. Bu takvimde boş hücre başarısızlık anlamına gelmez; gerçek tamamlanma kanıtı olmayan iş paketleri tamamlanmış gibi gösterilmez.*
 
 ## 3. BULGULAR
 
