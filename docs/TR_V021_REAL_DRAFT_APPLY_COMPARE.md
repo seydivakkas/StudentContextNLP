@@ -48,4 +48,44 @@
 
 ### Uygulama durumları
 
-İlk kez gerçek Windows ortamında çalıştırılmadan v0.2.1 korpusunu üretilmiş olarak göstermeyin. Yazılım regresyon CI başarısı sentetik veri üzerindedir. Gerçek veri çalıştırmasında bir blokaj varsa SHA veya bilimsel anlam korumasını **gevşetmeyin**; ilgili kümeyi ayrı inceleyin ve gerekirse yeni sürüm planı oluşturun. Gizlilik gereği tam hata listeleri/öğrenci açıklamaları GitHub'a yüklenmez.
+**Gerçek Windows aşaması 11 Ekim 2026'da tamamlandı:** özgün v0.2 ve yeni v0.2.1 ayrı klasörlerde korunarak 10.804/10.804 kayıt karşılaştırıldı; 64/64 yazılım testi PASS. Aşağıdaki gerçek sonuçlar yalnız otomatik kural analizidir; semantik doğruluk bağımsız olarak ispatlanmış değildir. Bir blokaj veya yeni kanıt bulunursa SHA veya bilimsel anlam koruması **gevşetilmez**; ilgili küme ayrı incelenir. Tam hata listeleri/öğrenci açıklamaları GitHub'a yüklenmez.
+
+## Windows gerçek veri kabulü — 11 Ekim 2026
+
+**Kaynak kanıt:** Araştırmacının yerel PowerShell günlüğü. Kod/testler GitHub CI'da doğrulanmıştır; gerçek veri ve özel satır düzeyi dosyalar yalnız araştırmacının Windows bilgisayarında bulunmaktadır.
+
+| Kabul kalemi | Gerçek sonuç |
+|---|---:|
+| Yazılım regresyon testi | 64 / 64 PASS |
+| AI_DRAFT ZIP SHA-256 | PASS |
+| Kanıt eşleşmesine alınan aday | 37 |
+| Açık seçilen tam cümle önerisi | 34 |
+| Beklemede bırakılan belirsiz kayıt | 3 |
+| Her iki veri sürümündeki satır | 10.804 |
+| Yeni sürümde düzenlenen ayrı kayıt | 1.604 |
+| Düzenlenen Türkçe metin alanı örneği | 1.748 |
+| Orijinal QA kural bulgusu | 7.412 |
+| Yeni QA kural bulgusu | 4.926 |
+| **QA tetiklenmelerindeki mutlak değişim** | **−2.486** |
+| **Kural tetiklenmelerindeki oransal değişim** | **−%33,54** |
+| Yeni HIGH-kural regresyonu | 0 |
+| Korunan orijinal dosyaların SHA-256'sı | PASS |
+| Bağımsız insan doğrulaması | YAPILMADI |
+
+### Split düzeyinde tekrar çalıştırılabilir sayımlar
+
+| Split | Satır | Eski HIGH | Yeni HIGH | Eski MEDIUM | Yeni MEDIUM |
+|---|---:|---:|---:|---:|---:|
+| train | 4.969 | 983 | 314 | 1.139 | 1.350 |
+| test_ua | 540 | 118 | 39 | 121 | 149 |
+| test_uq | 733 | 53 | 20 | 243 | 244 |
+| test_ud | 4.562 | 776 | 163 | 775 | 1.145 |
+| **Toplam** | **10.804** | **1.930** | **536** | **2.278** | **2.888** |
+
+İşaretli **farklı satır** sayısı 4.208'den 3.424'e, hiç işaretlenmeyen satır sayısı 6.596'dan 7.380'e değişmiştir. HIGH→MEDIUM kayma olasılığı vardır; bu agregatlar tek tek satırların öncelik geçişlerini **kanıtlamaz**. Değişen 1.604 kayıt, değişen 1.748 Türkçe metin alanı örneğiyle karıştırılmamalıdır. Tekrarlanan sorular/referanslar aynı tam eşleşme düzeltmesinden etkilenebilir.
+
+**Kabul kararı:** v0.2.1 `UNVERIFIED_EXPLORATORY_AI_ASSISTED_PATCH` durumunda sürümlü *aday veri* olarak teknik olarak PASS. Türkçe bilimsel anlamın ve öğrenci yanılgılarının korunduğuna dair bağımsız gold kabulü **HOLD**. Otomatik kural tetiklenmesi %33,54 azalmıştır; gerçek çeviri hata oranı, kalite puanı, model Macro-F1 iyileşmesi veya nedensel etki olarak sunulamaz.
+
+**Korunan özel artefaktlar:** `reports/tr_patch_plan_v021_ai_draft/`, `data/tr_v0_2_1/`, `reports/tr_compare_v021/`, `data/tr_v0_2/`. Yeniden üretilebilir QA için `comparison_manifest.json`, `rule_delta.csv`, `concept_delta.csv` dosyaları kendi bilgisayarında tutulur; satır metinleri GitHub'a gönderilmez.
+
+**Sıradaki analitik kapı:** Test-UQ soru kümelerine duyarlı İngilizce/Türkçe karşılaştırmalı proxy modellerini çalıştırmadan önce v0.2↔v0.2.1 etiket/sınıf frekansı, değişen alan dağılımı, tekrarlanan soru/referans kaynaklı etki ve kural uyarılarının sınıflara göre değişimlerini ayrı raporla. Veri kümesine veya İngilizce P1 baseline dosyalarına yeni müdahale yapma.
