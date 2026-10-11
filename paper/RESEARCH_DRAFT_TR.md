@@ -106,6 +106,12 @@ Farklı kaynak kavram: **28**. Tekrarlanan kural/metin kanıt grubu: **155**. En
 
 Bunu izleyen `prioritize_translation_issues.py` kök neden modülü, tekrar eden kural tetiklenmelerini **kavram/alan/kaynak–hedef metin** anahtarına göre birleştirir; anlam tersine dönüşü, özgül yanlış terim ve diğer yüzeysel şüpheleri ayrı sıraya koyar. Tam 10.804 satırın bu yeni önceliklendirme aşaması henüz Windows üzerinde çalıştırılmadı. **T3-HUMAN yapılmadı, altın standart ve insan uyumu iddiası yoktur.**
 
+### T3-AUTO v0.4 — Gerçek tekrar grupları ve v0.2.1 tasarım kapısı (11 Ekim 2026)
+
+Araştırmacının Windows çıktısında **53/53 regresyon testi PASS**, tam 10.804 kayıt/7.412 kural bulgusundan **1.460 kavram+alan+kaynak/hedef kök neden adayı** ve 147 tekrar eden küme hesaplandı; **28 farklı kavram**, otomatik değiştirilen satır **0**. Mililitre kavramı 391 ayrı kayıt/66 farklı metin eşleşmesi; doygunluk 39 kayıt/2 eşleşme. Bunlar kesin hata sayıları değil, tekrar içeren şüpheli çeviri kümeleridir. Kaynak kümelemeye ilişkin bilimsel öncelik, gerçek hata olasılığı olarak yorumlanmayacaktır. [Gerçek tam veri kaydı](T3_FULL_CORPUS_REAL_2026-10-11.md).
+
+**v0.2.1 hazırlığı (kod tamamlandı, gerçek veri henüz oluşturulmadı):** [Sürümleme ve düzeltme kanıt protokolü](../docs/TR_PATCH_LAYER_V021.md) geliştirildi. `prepare_translation_patch_plan.py` P1/P2 tekrar eden kaynak metin eşleşmeleri için **boş düzeltme şablonu** üretir; `apply_translation_patch_plan.py` yalnız `APPLY_EXPLORATORY` olarak açıkça belirlenmiş, tam metin + gerekçeli, SHA kanıtı ile eşleşen önerileri *yeni* `data/tr_v0_2_1/` aday sürümünde uygulayabilir. AI önerileri `AI_DRAFT` statüsünde kalır, gold veya iki insanın değerlendirmesi değildir. Henüz gerçek v0.2.1 metni değiştirilmedi; P1 İngilizce baseline etkilenmedi.
+
 ## Araştırma etiği ve yeniden üretilebilirlik
 
 - Sentetik smoke sonuçları akademik tabloya alınmaz. API anahtarı, LLM API, bulut model inference, RAG, agent, büyük dil modeli fine-tuning yoktur.
